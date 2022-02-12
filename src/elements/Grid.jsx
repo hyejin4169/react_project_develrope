@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components'
 
 const Grid = (props) => {
-    const {children, width, maxWidth, height, padding, margin, flex, justify, bgc, ps, top, left, border, borderB, direction,} = props;
+    const {children, width, maxWidth, height, padding, margin, flex, justify, bgc, ps, top, left, border, borderB, direction, align}  = props;
 
     const styles = {
-        flex, width, maxWidth, height, padding, margin, justify, bgc, ps, top, left, border, borderB, direction
+        flex, width, maxWidth, height, padding, margin, justify, bgc, ps, top, left, border, borderB, direction, align,
     }
     return (
         <>
@@ -31,7 +31,8 @@ Grid.defaultProps = {
     left: false,
     border: false,
     borderB: false,
-    direction: 'row'
+    direction: 'row',
+    align: false,
 }
 
 const GridBox = styled.div`
@@ -41,7 +42,7 @@ const GridBox = styled.div`
     box-sizing: border-box;
     ${(props) => props.margin ? `margin: ${props.margin};` : ''}
     ${(props) => props.padding ? `padding: ${props.padding};` : ''}
-    ${(props) => props.flex ? `display: flex; align-items: center; justify-content: ${props.justify}; flex-direction: ${props.direction};` : ''}
+    ${(props) => props.flex ? `display: flex; align-items: center; justify-content: ${props.justify}; flex-direction: ${props.direction}; align-content: $` : ''}
     ${(props) => props.bgc ? `background-color: ${props.bgc};` : ''}
     ${(props) => props.ps ? `position: ${props.ps}; top: ${props.top}; left: ${props.left};` : ''}
     ${(props) => props.borderB ? `border-bottom: ${props.borderB};` : ''}
