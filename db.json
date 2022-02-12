@@ -1,0 +1,30 @@
+{
+  "post": [
+    {
+      "id": 1,
+      "userId": 3,
+      "nickname": "Daisy",
+      "content": "너무 졸려요. 살려주세요.",
+      "imgUrl": "https://post-phinf.pstatic.net/MjAxODA5MTBfMTE4/MDAxNTM2NTYxNzcyNzM5.yrHHJfPfuGHyIzuYrKJ7OkvJqF09taHupE9QzHuFG9sg.uGaZqSOID-_r6JBZtUOefL2hXprvOUOBby4NUOkaRdsg.JPEG/180910_%EC%96%B4%EC%A9%90%EC%A7%80_%EB%8D%94_%ED%94%BC%EA%B3%A4%ED%95%9C_%EA%B2%83_%EA%B0%99%EB%8D%94%EB%9D%BC%EB%8B%88-%EC%B9%B4%EB%93%9C%EB%89%B4%EC%8A%A4%28%EB%84%A4%EC%9D%B4%EB%B2%84%EC%9A%A9%29.jpg",
+      "userIcon": "https://post-phinf.pstatic.net/MjAxODA5MTBfMTE4/MDAxNTM2NTYxNzcyNzM5.yrHHJfPfuGHyIzuYrKJ7OkvJqF09taHupE9QzHuFG9sg.uGaZqSOID-_r6JBZtUOefL2hXprvOUOBby4NUOkaRdsg.JPEG/180910_%EC%96%B4%EC%A9%90%EC%A7%80_%EB%8D%94_%ED%94%BC%EA%B3%A4%ED%95%9C_%EA%B2%83_%EA%B0%99%EB%8D%94%EB%9D%BC%EB%8B%88-%EC%B9%B4%EB%93%9C%EB%89%B4%EC%8A%A4%28%EB%84%A4%EC%9D%B4%EB%B2%84%EC%9A%A9%29.jpg",
+      "comment_cnt": 0,
+      "date": "2022-02-12 12:00:00"
+    }
+  ],
+  "comment": [
+    {
+      "id": 2,
+      "userId": 3,
+      "nickname": "Ricky", 
+      "postId": 1,
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a" 
+    }
+  ],
+  "user": {
+    "id": 3,
+    "email": "aaa@naver.com",
+    "nickname": "Daisy",
+    "git": "www.naver.com",
+    "blog": "www.google.com"
+  }
+}
