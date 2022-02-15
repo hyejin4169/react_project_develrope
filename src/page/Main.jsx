@@ -1,82 +1,89 @@
-import React from 'react';
-import styled from 'styled-components';
-import Post from '../component/Post';
-import UserList from '../component/UserList';
+import React from "react";
+import styled from "styled-components";
 
-import { Button, Grid } from '../elements';
-import { useDispatch } from 'react-redux';
-import { actionCreators as postActions } from '../redux/modules/post';
-import { useSelector } from 'react-redux';
+import Post from "../component/Post";
+import UserList from "../component/UserList";
+import { Grid } from "../elements";
+
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
+import { history } from "../redux/configureStore";
 
 
 const Main = (props) => {
-    const dispatch = useDispatch()
-    const {history} = props;
+  const dispatch = useDispatch();
+  const post_list = useSelector((state) => state.post.list);
+//   const user_info = useSelector((state) => state.user.user);
+  const { history } = (props);
 
-    React.useEffect(()=>{    
-        dispatch(postActions.getPostDB())
-    },[dispatch])
+    React.useEffect(() => {
+      dispatch(postActions.getPostDB());
+    }, []);
 
-    const post_list = useSelector(state => state.post.list);
+//   React.useEffect(() => {
+//     if (post_list.length < 2) {
+//         dispatch(postActions.getPostDB());
+//     }
+//   }, []);
 
-
-    return (
-        <>
-            <Grid flex>
-                <UserListWrap>
-                    <UserList/>
-                </UserListWrap>
-                <Grid width='70%' margin= '120px 0 0 0'>
-                    {
-                        post_list.map(a => {
-                            return(
-                                <Grid key={a.id} margin='0 0 50px 0' _onClick={()=>{history.push(`/detail/${a.id}`)}}>
-                                    <Post {...a}/>
-                                </Grid>
-                            )
-                        })
-                    }
-                    <Grid margin='0 0 50px 0'>
-                        <Post/>
-                    </Grid>
-                    <Grid margin='0 0 50px 0'>
-                        <Post/>
-                    </Grid>
-                    <Grid margin='0 0 50px 0'>
-                        <Post/>
-                    </Grid>
-                    <Grid margin='0 0 50px 0'>
-                        <Post/>
-                    </Grid>
-                    <Grid margin='0 0 50px 0'>
-                        <Post/>
-                    </Grid>
-                    <Grid margin='0 0 50px 0'>
-                        <Post/>
-                    </Grid>
-                    <Grid margin='0 0 50px 0'>
-                        <Post/>
-                    </Grid>
-                    <Grid margin='0 0 50px 0'>
-                        <Post/>
-                    </Grid>
-                   
-                </Grid>
-            </Grid>
-            <Button float_btn _onClick={() => {history.push("/write");}}></Button>
-        </>
-    );
+  return (
+    <>
+      <Grid flex>
+        <UserListWrap>
+          <UserList />
+        </UserListWrap>
+        <Grid width="70%" margin="120px 0 0 0">
+          {post_list.map((p) => {
+            return (
+              <Grid
+                key={p.id}
+                margin="0 0 50px 0"
+                _onClick={() => {
+                  history.push(`/detail/${p.id}`);
+                }}
+              >
+                <Post {...p}/>
+              </Grid>
+            );
+          })}
+          <Grid margin="0 0 50px 0">
+            <Post />
+          </Grid>
+          <Grid margin="0 0 50px 0">
+            <Post />
+          </Grid>
+          <Grid margin="0 0 50px 0">
+            <Post />
+          </Grid>
+          <Grid margin="0 0 50px 0">
+            <Post />
+          </Grid>
+          <Grid margin="0 0 50px 0">
+            <Post />
+          </Grid>
+          <Grid margin="0 0 50px 0">
+            <Post />
+          </Grid>
+          <Grid margin="0 0 50px 0">
+            <Post />
+          </Grid>
+          <Grid margin="0 0 50px 0">
+            <Post />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Button float_btn _onClick={() => {history.push("/write");}}></Button>
+    </>
+  );
 };
 
 const UserListWrap = styled.div`
-    width: 28%;
-    position: sticky;
-    top: 0;
-    left: 0;
-    align-self: flex-start;
-    padding-top: 120px;
-
-
-`
+  width: 28%;
+  position: sticky;
+  top: 0;
+  left: 0;
+  align-self: flex-start;
+  padding-top: 120px;
+`;
 
 export default Main;

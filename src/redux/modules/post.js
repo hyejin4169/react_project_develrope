@@ -1,89 +1,208 @@
 import { createAction, handleActions } from "redux-actions";
-import { produce } from 'immer';
-import moment from 'moment';
+import { produce } from "immer";
 import axios from "axios";
+import moment from "moment";
 
+const GET_POST = "GET_POST";
+const ADD_POST = "ADD_POST";
 
-
-// 액션
-const GET_POST = 'GET_POST';
-
-
-
-// 액션함수
-const getPost = createAction(GET_POST, (post_list) => ({post_list}));
-
+// action creators
+const getPost = createAction(GET_POST, (post_list) => ({ post_list }));
+const addPost = createAction(ADD_POST, (post) => ({ post }));
 
 // initialState
 const initialState = {
-    list: [],
-}
+  list: [],
+};
 
-const initialPost = {
-    id: 0,
-    userId: 3,
-    nickname: "Daisy",
-    content: "너무 졸려요. 살려주세요.",
-    imgUrl: "https://post-phinf.pstatic.net/MjAxODA5MTBfMTE4/MDAxNTM2NTYxNzcyNzM5.yrHHJfPfuGHyIzuYrKJ7OkvJqF09taHupE9QzHuFG9sg.uGaZqSOID-_r6JBZtUOefL2hXprvOUOBby4NUOkaRdsg.JPEG/180910_%EC%96%B4%EC%A9%90%EC%A7%80_%EB%8D%94_%ED%94%BC%EA%B3%A4%ED%95%9C_%EA%B2%83_%EA%B0%99%EB%8D%94%EB%9D%BC%EB%8B%88-%EC%B9%B4%EB%93%9C%EB%89%B4%EC%8A%A4%28%EB%84%A4%EC%9D%B4%EB%B2%84%EC%9A%A9%29.jpg",
-    userIcon: "https://post-phinf.pstatic.net/MjAxODA5MTBfMTE4/MDAxNTM2NTYxNzcyNzM5.yrHHJfPfuGHyIzuYrKJ7OkvJqF09taHupE9QzHuFG9sg.uGaZqSOID-_r6JBZtUOefL2hXprvOUOBby4NUOkaRdsg.JPEG/180910_%EC%96%B4%EC%A9%90%EC%A7%80_%EB%8D%94_%ED%94%BC%EA%B3%A4%ED%95%9C_%EA%B2%83_%EA%B0%99%EB%8D%94%EB%9D%BC%EB%8B%88-%EC%B9%B4%EB%93%9C%EB%89%B4%EC%8A%A4%28%EB%84%A4%EC%9D%B4%EB%B2%84%EC%9A%A9%29.jpg",
-    comment_cnt: 0,
-    date: moment().format('YYYY-MM-DD HH:mm:ss'),
-}
+// 게시글 하나에 대한 기본적인 정보
+// const initialPost = {
 
+// };
+
+//middleware actions
 
 const getPostDB = () => {
-    return async function (dispatch, getState, { history }){
-
-        try {
-            const docs = await axios.get('http://localhost:3003/post');
-            
-            dispatch(getPost(docs.data))
-        } catch(err) {
-            console.log("포스트를 불러올 수 없습니다!", err);
-        }
-        
-    }
-}
+  return async function (dispatch, getState, { history }) {
+    axios
+      .get("http://localhost:3003/post")
+      .then((res) => {
+        dispatch(getPost(res.data));
+      })
+      .catch((err) => {
+        window.alert("글을 불러올 수 없어요!");
+        console.log("글 불러오기 실패!", err);
+      });
+  };
+};
 
 const getOnePostDB = (post_id) => {
-    return async function (dispatch, getState, {history}){
+  return async function (dispatch, getState, { history }) {
+    axios
+      .get(`http://localhost:3003/post/${post_id}`)
+      .then((res) => {
+        dispatch(getPost([res.data]));
+      })
+      .catch((err) => {
+        window.alert("해당 글을 불러올 수 없어요!");
+        console.log("선택 글 불러오기 실패!", err);
+      });
+  };
+};
 
-        try {
-            const doc = await axios.get(`http://localhost:3003/post/${post_id}`);
-            
-            dispatch(getPost([doc.data]))
-        } catch(err) {
-            console.log("포스트를 불러올 수 없습니다.",err);
-        }
-    }
-}
+const addPostDB = (content, id, userId) => {
+  return async function (dispatch, getState, { history }) {
+    axios
+    .post("http://localhost:3003/post", {
+      id: id,
+      userId: userId,
+      nickname: "Apple",
+      imgUrl:
+        "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg",
+      userIcon:
+      "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg",
+      comment_cnt: 0,
+      date: moment().format("YYYY-MM-DD HH:mm:ss"),
+      content: content,
+  })
+    .then((res) => {
+      console.log("res.data : ", res.data);
+      dispatch(addPost(res.data));
+    })
+    .catch((err) => {
+      window.alert("해당 글을 불러올 수 없어요!");
+      console.log("선택 글 불러오기 실패!", err);
+    })
+    .then(() => {
+      history.replace('/')
+    })
+  };
+};
 
-// const updateCommentCntDB = (post_id, plus) => {
-//     return async function(dispatch){
-//         try{
-//             const doc = await axios.get(`http://localhost:3003/post/${post_id}`);
-
-//             if(plus){
-//                 await axios.put(`http://localhost:3003/post/${post_id}`,{comment_cnt: doc.data.comment_cnt})
-//             } else if(!plus){
-
-//             }
-//         }
+// const editPostFB = (post_id = null, post = {}) => {
+//   return async function (dispatch, getState, { history }) {
+//     if (!post_id) {
+//       console.log("게시물 정보가 없어요!");
+//       return;
 //     }
-// }
 
+//     const _image = getState().image.preview;
+//     const _post_idx = getState().post.list.findIndex((p) => p.id === post_id);
+//     const _post = getState().post.list[_post_idx];
+//     const postDB = doc(db, "post", post_id);
 
-export default handleActions({
-    [GET_POST]: (state, action) => produce(state, (draft) => {
-        draft.list = action.payload.post_list;
-        console.log(draft.list)
-    }),
-},initialState)
+//     if (_image === _post.image_url) {
+//       await updateDoc(postDB, post);
+//       dispatch(editPost(post_id, { ...post }));
+//       history.replace("/");
+
+//       return;
+//     } else {
+//       const user_id = getState().user.user.uid;
+//       const storageRef = ref(
+//         storage,
+//         `images/${user_id}_${new Date().getTime()}`
+//       );
+//       const _upload = uploadString(storageRef, _image, "data_url");
+
+//       _upload
+//         .then((snapshot) => {
+//           console.log(snapshot);
+
+//           getDownloadURL(snapshot.ref)
+//             .then((url) => {
+//               console.log(url);
+
+//               return url;
+//             })
+//             .then((url) => {
+//               updateDoc(postDB, { ...post, image_url: url });
+//               dispatch(editPost(post_id, { ...post, image_url: url }));
+//               history.replace("/");
+//             });
+//         })
+//         .catch((err) => {
+//           window.alert("이미지 업로드에 문제가 있어요!");
+//           console.log("이미지 업로드 실패!", err);
+//         });
+//     }
+//   };
+// };
+
+// const deletePostDB = (post_id) => {
+//   return async function (dispatch, getState, { history }) {
+//     // if (!post_id) {
+//     window.alert("삭제하시겠습니까?");
+//     // }
+
+//     const docRef = doc(db, "post", post_id);
+//     await deleteDoc(docRef);
+
+//     const _post_list = getState().post.list;
+//     const post_index = _post_list.findIndex((d) => {
+//       return d.id === post_id;
+//     });
+//     console.log("post_index : ", post_index);
+//     dispatch(deletePost(post_index));
+//     history.replace("/");
+//   };
+
+// reducer
+export default handleActions(
+  {
+    [GET_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list.push(...action.payload.post_list);
+        // draft.list = draft.list.reduce((acc, cur) => {
+        //   if (acc.findIndex((a) => a.id === cur.id) === -1) {
+        //     return [...acc, cur];
+        //   } else {
+        //     acc[acc.findIndex((a) => a.id === cur.id)] = cur;
+        //     return acc;
+        //   }
+        // }, []);
+
+        // if (action.payload.paging) {
+        //   draft.paging = action.payload.paging;
+        // }
+        // draft.paging = action.payload.paging;
+        // draft.is_loading = false;
+      }),
+
+    [ADD_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list.unshift(action.payload.post);
+      }),
+
+    // [EDIT_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     let idx = draft.list.findIndex((p) => p.id === action.payload.post_id); //id로 내가 뭘 수정할건지 찾아야함(리스트에서 몇번째인걸 고칠건지)
+    //     draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
+    //   }),
+
+    // [DELETE_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.list = state.list.filter((l, idx) => {
+    //       return parseInt(action.payload.post_index) !== idx;
+    //     });
+    //   }),
+    // }),
+  },
+  initialState
+);
 
 const actionCreators = {
-    getPost,
-    getPostDB,
-    getOnePostDB,
-}
+  getPost,
+  getPostDB,
+  getOnePostDB,
+  addPost,
+  addPostDB,
+  //   setPost,
+  //   editPost,
+  //   deletePost,
+  //   editPostDB,
+  //   deletePostDB,
+};
 
-export {actionCreators};
+export { actionCreators };
+

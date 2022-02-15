@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Grid } from '../elements';
 import './App.css';
-// import Header from './Header';
 import Main from './../page/Main';
 import Detail from '../page/Detail';
+
 import Login from "../page/Login";
 import Signup from "../page/Signup";
 import PostWrite from "../page/PostWrite";
@@ -28,15 +28,16 @@ function App() {
 
   return (
     <>
-    <Header></Header>
-      <Grid maxWidth='1200px' margin='0 auto'>
+      <Header></Header>
+      <Grid maxWidth="1200px" margin="0 auto">
         <ConnectedRouter history={history}>
-          <Header/>
-          <Route path='/' exact component={Main}/>
-          <Grid margin='120px 0 0 0'>
-            <Route path='/detail/:id' exact component={Detail}/>
-            <Route path="/login" exact component={Login}/>
+          <Header />
+          <Route path="/" exact component={Main} />
+          <Grid margin="120px 0 0 0">
+            <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
+            <Route path="/detail" exact component={Detail} />
+            <Route path="/detail/:id" exact component={Detail} />
             <Route path="/write" exact component={PostWrite} />
             <Route path="/write/:id" exact component={PostWrite} />
           </Grid>

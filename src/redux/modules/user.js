@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from 'immer';
-
 import axios from "axios";
 
 // 액션
@@ -77,16 +76,6 @@ const loginDB = (email, pwd) => {
     }
 }
 
-// const logoutDB = () => {
-//     return async function(dispatch, getState, {history}){
-//         try{
-
-//         }catch(err){
-
-//         };
-//     }
-// }
-
 const loginCheckDB = () => {
     return async function(dispatch, getState, {history}){
         console.log('되나?')
@@ -130,7 +119,6 @@ const actionCreators = {
     outUser,
     signupDB,
     loginDB,
-    // logoutDB,
     loginCheckDB,
 }
 

@@ -3,12 +3,11 @@ import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
+
 import Post from './modules/post'
 import Comment from './modules/comment'
 import User from './modules/user'
-// import Post from "./modules/post";
 // import Image from "./modules/image";
-// import Comment from "./modules/comment";
 
 export const history = createBrowserHistory();
 

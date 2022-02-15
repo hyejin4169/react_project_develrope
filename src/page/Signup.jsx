@@ -10,13 +10,14 @@ import axios from "axios";
 const Signup = (props) => {
   const dispatch = useDispatch();
 
+  //이메일, 닉네임, 블로그 유형, 블로그, 깃허브, 비밀번호, 비밀번호 확인 확인
   const [id, setId] = React.useState("");
-  const [pwd, setPwd] = React.useState("");
-  const [pwd_check, setPwdCheck] = React.useState("");
   const [user_name, setUserName] = React.useState("");
   const [blog_type, setBlogType] = React.useState("");
   const [blog_ad, setBlogAd] = React.useState("");
   const [git_ad, setGitAd] = React.useState("");
+  const [pwd, setPwd] = React.useState("");
+  const [pwd_check, setPwdCheck] = React.useState("");
 
   const [email_check, setEmailCheck] = React.useState(false);
   const [nickname_check, setNicknameCheck] = React.useState(false);
@@ -55,6 +56,7 @@ const Signup = (props) => {
 
   }
 
+
   const signup = () => {
     if (id === "" || pwd === "" || user_name === "" || blog_type === "" || blog_ad === "" || git_ad === "") {
       window.alert("입력하지 않은 칸이 있습니다!!");
@@ -75,7 +77,9 @@ const Signup = (props) => {
       return;
     }
 
+
     dispatch(userActions.signupDB(id, pwd,pwd_check, user_name, git_ad, blog_ad, blog_type));
+
   };
 
   return (
