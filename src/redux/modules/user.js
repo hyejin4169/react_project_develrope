@@ -15,7 +15,7 @@ const initialState = {
     is_login: false,
 }
 
-const signupDB = (email, password,check_password, nickname, git, blog, blogtype, userIcon='https://post-phinf.pstatic.net/MjAxODA5MTBfMTE4/MDAxNTM2NTYxNzcyNzM5.yrHHJfPfuGHyIzuYrKJ7OkvJqF09taHupE9QzHuFG9sg.uGaZqSOID-_r6JBZtUOefL2hXprvOUOBby4NUOkaRdsg.JPEG/180910_%EC%96%B4%EC%A9%90%EC%A7%80_%EB%8D%94_%ED%94%BC%EA%B3%A4%ED%95%9C_%EA%B2%83_%EA%B0%99%EB%8D%94%EB%9D%BC%EB%8B%88-%EC%B9%B4%EB%93%9C%EB%89%B4%EC%8A%A4%28%EB%84%A4%EC%9D%B4%EB%B2%84%EC%9A%A9%29.jpg') => {
+const signupDB = (email, password,check_password, nickname, git, blog, blogtype, userIcon='https://cdn.imweb.me/upload/S20200903356594b8dc821/122e89b0892d2.jpg') => {
     return async function(dispatch, getState, {history}){
 
         try {
@@ -70,7 +70,7 @@ const loginDB = (email, pwd) => {
             };
 
         } catch(err){
-            window.alert('회원가입에 실패했습니다.')
+            window.alert('아이디와 비밀번호를 다시 확인해주세요.')
             console.log(err)
         }
     }
@@ -78,12 +78,11 @@ const loginDB = (email, pwd) => {
 
 const loginCheckDB = () => {
     return async function(dispatch, getState, {history}){
-        console.log('되나?')
         try{
             const check = await axios.get('http://3.35.132.95/api/auth',{
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
+                },
             })
             if(check.data.ok === true){
                 dispatch(setUser({

@@ -25,7 +25,7 @@ const initialState = {
 const getPostDB = () => {
   return async function (dispatch, getState, { history }) {
     axios
-      .get("http://localhost:3003/post")
+      .get("http://3.35.132.95/api/post")
       .then((res) => {
         dispatch(getPost(res.data));
       })
@@ -50,28 +50,28 @@ const getOnePostDB = (post_id) => {
   };
 };
 
-const addPostDB = (content, id, userId) => {
+const addPostDB = (content) => {
   return async function (dispatch, getState, { history }) {
+    const user_info = getState().user.user;
+    const doc = {
+        userId: user_info.uid,
+        nickname: user_info.nickname,
+        imgUrl: "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg",
+        userIcon: user_info.userIcon,
+        comment_cnt: 0,
+        date: moment().format("YYYY-MM-DD HH:mm:ss"),
+        content: content,
+    };
+
     axios
-    .post("http://localhost:3003/post", {
-      id: id,
-      userId: userId,
-      nickname: "Apple",
-      imgUrl:
-        "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg",
-      userIcon:
-      "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg",
-      comment_cnt: 0,
-      date: moment().format("YYYY-MM-DD HH:mm:ss"),
-      content: content,
-  })
+    .post("http://3.35.132.95/api/post", {...doc, header: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
     .then((res) => {
       console.log("res.data : ", res.data);
-      dispatch(addPost(res.data));
+      dispatch(addPost({...doc, postId: res.data.postId}));
     })
     .catch((err) => {
-      window.alert("해당 글을 불러올 수 없어요!");
-      console.log("선택 글 불러오기 실패!", err);
+      window.alert("포스트 작성에 실패했습니다!");
+      console.log("포스트 작성 실패!", err);
     })
     .then(() => {
       history.replace('/')

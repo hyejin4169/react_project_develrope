@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = (props) => {
-    const {children, text, width, bgc, color, radius, height, margin, float_btn, _onClick, _disabled,} = props;
+    const {children, text, width, bgc, color, radius, height, margin, float_btn, _onClick, _disabled, minWidth} = props;
 
     const styles = {
-        width, bgc, color, radius, height, margin, float_btn, _onClick, 
+        width, bgc, color, radius, height, margin, float_btn, _onClick, minWidth
     };
 
     if(float_btn){
@@ -35,6 +35,7 @@ Button.defaultProps={
     float_btn: false,
     _onClick: ()=>{},
     _disabled: false,
+    minWidth: false,
 }
 
 const B = styled.button`
@@ -46,6 +47,7 @@ const B = styled.button`
     height: ${props => props.height};
     border-radius: ${props => props.radius};
     ${props => props.margin? `margin: ${props.margin};` : ''}
+    ${props => props.minWidth? `min-width: ${props.minWidth};` : ''}
     cursor: pointer;
     transition: 0.3s;
 

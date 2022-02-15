@@ -21,7 +21,7 @@ export default UserList;
 
 const UserItem = (props) => {
     return (
-        <Grid flex padding='10px 10px' margin='0 0 10px 0' height='auto' border='1px solid #eee'>  
+        <Grid flex padding='10px 10px' margin='0 0 10px 0' height='auto' >  
             <UserBox>
                 <Grid>
                     <Image shape='circle' src={props.userIcon}/>

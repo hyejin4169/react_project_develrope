@@ -3,34 +3,41 @@ import styled from "styled-components";
 
 import Post from "../component/Post";
 import UserList from "../component/UserList";
-import { Grid } from "../elements";
+import { Grid, Button, Text } from "../elements";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configureStore";
+import Permit from './../shared/Permit';
 
 
 const Main = (props) => {
   const dispatch = useDispatch();
-  const post_list = useSelector((state) => state.post.list);
-//   const user_info = useSelector((state) => state.user.user);
   const { history } = (props);
+
+  const token = localStorage.getItem('token');
+  const is_login = useSelector(state => state.user.is_login);
+
+  const post_list = useSelector((state) => state.post.list);
 
     React.useEffect(() => {
       dispatch(postActions.getPostDB());
     }, []);
 
-//   React.useEffect(() => {
-//     if (post_list.length < 2) {
-//         dispatch(postActions.getPostDB());
-//     }
-//   }, []);
-
   return (
     <>
       <Grid flex>
         <UserListWrap>
-          <UserList />
+          {(token && is_login) && (
+            <UserList />
+          )}
+          {(!token || !is_login) && (
+            <LoginCome>
+              <p>지금 <span>로그인</span> 하시고</p>
+              <p>다른 유저의 블로그를 방문해보세요</p>
+              <Button margin='3vh auto 0' width='250px' _onClick={()=>{history.push('/')}}>로그인</Button>
+            </LoginCome>
+          )}
         </UserListWrap>
         <Grid width="70%" margin="120px 0 0 0">
           {post_list.map((p) => {
@@ -72,7 +79,9 @@ const Main = (props) => {
           </Grid>
         </Grid>
       </Grid>
-      <Button float_btn _onClick={() => {history.push("/write");}}></Button>
+      <Permit>
+        <Button float_btn _onClick={() => {history.push("/write");}}></Button>
+      </Permit>
     </>
   );
 };
@@ -85,5 +94,19 @@ const UserListWrap = styled.div`
   align-self: flex-start;
   padding-top: 120px;
 `;
+
+const LoginCome = styled.div`
+  text-align: center;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 80%;
+  padding: 3vh 0;
+
+    p:first-of-type {
+      span {
+        font-weight: 800;
+      }
+    }
+`
 
 export default Main;
