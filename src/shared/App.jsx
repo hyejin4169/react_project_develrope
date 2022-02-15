@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, Grid } from '../elements';
 import './App.css';
 // import Header from './Header';
@@ -11,9 +12,20 @@ import Header from "../component/Header";
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router';
 import { history } from '../redux/configureStore';
-
+import { useDispatch } from 'react-redux';
+import {actionCreators as userActions} from '../redux/modules/user'
 
 function App() {
+  const dispatch = useDispatch();
+  const token = localStorage.getItem('token');
+
+  React.useEffect(()=>{
+    if(token){
+      console.log('토큰있다!')
+      dispatch(userActions.loginCheckDB());
+    }
+  },[])
+
   return (
     <>
     <Header></Header>
@@ -22,12 +34,12 @@ function App() {
           <Header/>
           <Route path='/' exact component={Main}/>
           <Grid margin='120px 0 0 0'>
-            <Route path='/detail' exact component={Detail}/>
+            <Route path='/detail/:id' exact component={Detail}/>
             <Route path="/login" exact component={Login}/>
             <Route path="/signup" exact component={Signup} />
             <Route path="/write" exact component={PostWrite} />
+            <Route path="/write/:id" exact component={PostWrite} />
           </Grid>
-          <Button float_btn _onClick={() => {history.push("/write");}}></Button>
         </ConnectedRouter>
       </Grid>
     </>

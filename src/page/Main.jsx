@@ -3,9 +3,23 @@ import styled from 'styled-components';
 import Post from '../component/Post';
 import UserList from '../component/UserList';
 
-import { Grid } from '../elements';
+import { Button, Grid } from '../elements';
+import { useDispatch } from 'react-redux';
+import { actionCreators as postActions } from '../redux/modules/post';
+import { useSelector } from 'react-redux';
 
-const Main = () => {
+
+const Main = (props) => {
+    const dispatch = useDispatch()
+    const {history} = props;
+
+    React.useEffect(()=>{    
+        dispatch(postActions.getPostDB())
+    },[dispatch])
+
+    const post_list = useSelector(state => state.post.list);
+
+
     return (
         <>
             <Grid flex>
@@ -13,6 +27,15 @@ const Main = () => {
                     <UserList/>
                 </UserListWrap>
                 <Grid width='70%' margin= '120px 0 0 0'>
+                    {
+                        post_list.map(a => {
+                            return(
+                                <Grid key={a.id} margin='0 0 50px 0' _onClick={()=>{history.push(`/detail/${a.id}`)}}>
+                                    <Post {...a}/>
+                                </Grid>
+                            )
+                        })
+                    }
                     <Grid margin='0 0 50px 0'>
                         <Post/>
                     </Grid>
@@ -40,6 +63,7 @@ const Main = () => {
                    
                 </Grid>
             </Grid>
+            <Button float_btn _onClick={() => {history.push("/write");}}></Button>
         </>
     );
 };
