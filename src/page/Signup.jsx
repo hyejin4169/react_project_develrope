@@ -5,6 +5,7 @@ import Radio from "../component/Radio";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { emailCheck, pwdCheck } from "../shared/common";
+import axios from "axios";
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -18,11 +19,52 @@ const Signup = (props) => {
   const [pwd, setPwd] = React.useState("");
   const [pwd_check, setPwdCheck] = React.useState("");
 
-  //오류메시지
+  const [email_check, setEmailCheck] = React.useState(false);
+  const [nickname_check, setNicknameCheck] = React.useState(false);
+
+  const emailCheckF = async() => {
+    if(emailCheck(id)){
+      try{
+        let check = await axios.post('http://3.35.132.95/api/join/emailCheck',{email: id});
+        if(check.data.ok === true){
+          setEmailCheck(check.data.ok);
+          alert(check.data.message);
+        } else if(check.data.ok === false){
+          alert(check.data.errorMessage);
+        }
+      } catch(err){
+        console.log(err)
+      }
+    } else if(!emailCheck(id)){
+      alert('이메일 형식을 먼저 확인해주세요!')
+    }
+  }
+
+  const nicknameCheckF = async() => {
+    try{
+      let check = await axios.post('http://3.35.132.95/api/join/nicknameCheck',{nickname: user_name}); 
+      if(check.data.ok === true){
+        setNicknameCheck(check.data.ok);
+        alert(check.data.message);
+      } else if(check.data.ok === false){
+        alert(check.data.errorMessage);
+      }
+
+    } catch(err){
+      console.log(err);
+    }
+
+  }
+
+
   const signup = () => {
     if (id === "" || pwd === "" || user_name === "" || blog_type === "" || blog_ad === "" || git_ad === "") {
       window.alert("입력하지 않은 칸이 있습니다!!");
       return;
+    }
+
+    if (!email_check || !nickname_check) {
+      window.alert('이메일이나 닉네임의 중복검사가 되지 않았습니다!')
     }
 
     if (!emailCheck(id)) {
@@ -35,7 +77,9 @@ const Signup = (props) => {
       return;
     }
 
-    dispatch(userActions.signupDB(id, pwd, user_name));
+
+    dispatch(userActions.signupDB(id, pwd,pwd_check, user_name, git_ad, blog_ad, blog_type));
+
   };
 
   return (
@@ -67,7 +111,7 @@ const Signup = (props) => {
 
 
           </Grid>
-          <Button width="100px" height="45px" margin="0 0 0 10px">
+          <Button width="100px" height="45px" margin="0 0 0 10px" _disabled={email_check ? true : false} _onClick={emailCheckF}>
             중복확인
           </Button>
         </Grid>
@@ -80,7 +124,7 @@ const Signup = (props) => {
               setUserName(e.target.value);
             }}
           ></Input>
-          <Button width="100px" margin="0 0 0 10px">
+          <Button width="100px" margin="0 0 0 10px" _disabled={nickname_check ? true : false} _onClick={nicknameCheckF}>
             중복확인
           </Button>
         </Grid>

@@ -3,23 +3,12 @@ import { produce } from "immer";
 import axios from "axios";
 import moment from "moment";
 
-// import { actionCreators as imageActions } from "./image";
-
 const GET_POST = "GET_POST";
 const ADD_POST = "ADD_POST";
-// const EDIT_POST = "EDIT_POST";
-// const DELETE_POST = "DELETE_POST";
 
 // action creators
 const getPost = createAction(GET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-// const editPost = createAction(EDIT_POST, (post_id, post) => ({
-//   post_id,
-//   post,
-// }));
-// const deletePost = createAction(DELETE_POST, (post_index) => ({
-//   post_index,
-// }));
 
 // initialState
 const initialState = {
@@ -28,16 +17,7 @@ const initialState = {
 
 // 게시글 하나에 대한 기본적인 정보
 // const initialPost = {
-//   id: 11,
-//   userId: 5,
-//   nickname: "Apple",
-//   content: "흐아앙",
-//   imgUrl:
-//     "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg",
-//   userIcon:
-//   "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg",
-//   comment_cnt: 0,
-//   date: moment().format("YYYY-MM-DD HH:mm:ss"),
+
 // };
 
 //middleware actions
@@ -67,22 +47,6 @@ const getOnePostDB = (post_id) => {
         window.alert("해당 글을 불러올 수 없어요!");
         console.log("선택 글 불러오기 실패!", err);
       });
-    // let _post = doc.data();
-    // let post_d = Object.keys(_post).reduce(
-    //   (acc, cur) => {
-    //     if (cur.indexOf("user_") !== -1) {
-    //       return {
-    //         ...acc,
-    //         user_info: { ...acc.user_info, [cur]: _post[cur] },
-    //       };
-    //     }
-
-    //     return { ...acc, [cur]: _post[cur] };
-    //   },
-    //   { id: doc.id, user_info: {} }
-    // );
-
-    // dispatch(getPost([post_d]));
   };
 };
 
@@ -112,41 +76,6 @@ const addPostDB = (content, id, userId) => {
     .then(() => {
       history.replace('/')
     })
-
-    // const user_info = {
-    //   user_name: _user.user_name,
-    //   user_id: _user.uid,
-    //   user_profile: _user.user_profile,
-    // };
-
-    // const _image = getState().image.preview;
-    // console.log(_image);
-
-    // const storageRef = ref(
-    //   storage,
-    //   `images/${user_info.user_id}_${new Date().getTime()}`
-    // );
-    // const _upload = uploadString(storageRef, _image, "data_url");
-    // _upload.then((snapshot) => {
-    //   getDownloadURL(snapshot.ref)
-    //     .then((url) => {
-    //       console.log(url);
-
-    //       return url;
-    //     })
-    //     // db에서 모든 데이터가 받아진 후에 포스트를 만들 수 있게 함(비동기)
-    //     .then(async (url) => {
-    //       const postDB = await addDoc(collection(firestore, "post"), {
-    //         ...user_info,
-    //         ..._post,
-    //         image_url: url,
-    //       });
-    //       let post = { user_info, ..._post, id: postDB.id, image_url: url };
-    //       dispatch(addPost(post));
-    //       history.replace("/");
-
-    //       dispatch(imageActions.setPreview(null));
-    //     })
   };
 };
 
@@ -276,3 +205,4 @@ const actionCreators = {
 };
 
 export { actionCreators };
+

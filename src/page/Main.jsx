@@ -33,16 +33,16 @@ const Main = (props) => {
           <UserList />
         </UserListWrap>
         <Grid width="70%" margin="120px 0 0 0">
-          {post_list.map((p, idx) => {
+          {post_list.map((p) => {
             return (
               <Grid
-                key={p}
+                key={p.id}
                 margin="0 0 50px 0"
                 _onClick={() => {
                   history.push(`/detail/${p.id}`);
                 }}
               >
-                <Post key={idx} {...p} />
+                <Post {...p}/>
               </Grid>
             );
           })}
@@ -72,6 +72,7 @@ const Main = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      <Button float_btn _onClick={() => {history.push("/write");}}></Button>
     </>
   );
 };

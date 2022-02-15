@@ -1,133 +1,125 @@
 import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
+import { produce } from 'immer';
 import axios from "axios";
 
-// actions
-const LOG_OUT = "LOG_OUT";
-const GET_USER = "GET_USER";
-const SET_USER = "SET_USER";
+// 액션
+const SET_USER = 'SET_USER';
+const OUT_USER = 'OUT_USER';
 
-// action creators
-
-const logOut = createAction(LOG_OUT, (user) => ({ user }));
-const getUser = createAction(GET_USER, () => ({  }));
+// 액션 함수
 const setUser = createAction(SET_USER, (user) => ({ user }));
+const outUser = createAction(OUT_USER, () => ({ }));
 
-// initialState
 const initialState = {
-  user: null,
-  is_login: false,
-};
+    user: null,
+    is_login: false,
+}
 
-// middleware actions
-const signupDB = (email, nickname) => {
-  return function (dispatch, getState, { history }) {
-    axios
-      .post("http://localhost:3003/user", {
-        "email": email,
-        "nickname": nickname,
-      })
-      .then((res) => {
-        if (res.data === "회원가입 완료") {
-          window.alert(res.data);
-          history.push("/");
-          return;
+const signupDB = (email, password,check_password, nickname, git, blog, blogtype, userIcon='https://post-phinf.pstatic.net/MjAxODA5MTBfMTE4/MDAxNTM2NTYxNzcyNzM5.yrHHJfPfuGHyIzuYrKJ7OkvJqF09taHupE9QzHuFG9sg.uGaZqSOID-_r6JBZtUOefL2hXprvOUOBby4NUOkaRdsg.JPEG/180910_%EC%96%B4%EC%A9%90%EC%A7%80_%EB%8D%94_%ED%94%BC%EA%B3%A4%ED%95%9C_%EA%B2%83_%EA%B0%99%EB%8D%94%EB%9D%BC%EB%8B%88-%EC%B9%B4%EB%93%9C%EB%89%B4%EC%8A%A4%28%EB%84%A4%EC%9D%B4%EB%B2%84%EC%9A%A9%29.jpg') => {
+    return async function(dispatch, getState, {history}){
+
+        try {
+            const join = await axios.post('http://3.35.132.95/api/join',{
+                            email: email,
+                            password: password,
+                            confirmpassword: check_password,
+                            nickname: nickname,
+                            git: git,
+                            blog: blog,
+                            // blogtype: blogtype,
+                            userIcon: userIcon,
+                        });
+            console.log(join);
+            if(join.data.ok === true){
+                window.alert('성공적으로 회원가입하셨습니다!');
+                history.replace('/login');
+            } else if(join.data.ok === false){
+                window.alert('회원가입에 실패했습니다.');
+                history.replace('/signup');
+            }
+
+        } catch(err){
+            alert('회원가입에 실패했습니다.')
+            console.log(err)
         }
-        window.alert(res.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
+    }
+}
 
-// const loginDB = (id, pwd) => {
-//   return function (dispatch, getState, { history }) {
-//     //로그인 state 유지
-//     setPersistence(authService, browserSessionPersistence).then((res) => {
-//       console.log("세션 추가");
-//       console.log(id, pwd);
-//       signInWithEmailAndPassword(authService, id, pwd)
-//         .then((userCredential) => {
-//           console.log("로그인 성공!");
-//           console.log("usercredential : ", userCredential);
-//           dispatch(
-//             setUser({
-//               id: id,
-//               user_name: userCredential.user.displayName,
-//               user_profile: "",
-//               uid: userCredential.user.uid,
-//             })
-//           );
-//           history.push("/");
-//         })
-//         .catch((error) => {
-//           const errorCode = error.code;
-//           const errorMessage = error.message;
-//           window.alert("아이디와 비밀번호를 다시 확인해주세요!");
-//           console.log(errorCode, errorMessage);
-//         });
-//     });
-//   };
-// };
+const loginDB = (email, pwd) => {
+    return async function(dispatch, getState, {history}){
+        console.log(history)
+        try{
+            const login = await axios.post('http://3.35.132.95/api/login',{
+                email: email,
+                password: pwd
+            })
+            console.log(login)
+            if(login.data.ok === true){
+                window.alert('로그인 되었습니다!')
+                history.replace('/')
+                // 토큰 받아서 넣어줘야 한다.
+                localStorage.setItem('token',login.data.token);
+                dispatch(setUser({
+                    nickname: login.data.nickname,
+                    email: email,
+                    userIcon: login.data.userIcon,
+                    uid: login.data.userId
+                }))
+            } else if(login.data.ok === false){
+                window.alert('아이디와 비밀번호를 다시 확인해주세요.')
+            };
 
-// const loginCheckDB = () => {
-//   return function (dispatch, getState, { history }) {
-//     onAuthStateChanged(authService, (user) => {
-//       if (user) {
-//         dispatch(
-//           setUser({
-//             id: user.email,
-//             user_name: user.displayName,
-//             user_profile: "",
-//             uid: user.uid,
-//           })
-//         );
-//       } else {
-//         dispatch(logOut());
-//       }
-//     });
-//   };
-// };
+        } catch(err){
+            window.alert('회원가입에 실패했습니다.')
+            console.log(err)
+        }
+    }
+}
 
-// const logoutDB = () => {
-//   return function (dispatch, getState, { history }) {
-//     signOut(authService).then(() => {
-//       dispatch(logOut());
-//       history.replace("/");
-//     });
-//   };
-// };
+const loginCheckDB = () => {
+    return async function(dispatch, getState, {history}){
+        console.log('되나?')
+        try{
+            const check = await axios.get('http://3.35.132.95/api/auth',{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            if(check.data.ok === true){
+                dispatch(setUser({
+                    nickname: check.data.nickname,
+                    email: check.data.email,
+                    userIcon: check.data.userIcon,
+                    uid: check.data.userId
+                }))
+            } else{
+                dispatch(outUser());
+            }
+        }catch(err){
+            console.log('에러발생',err);
+        };
+    }
+}
 
-// reducer
-export default handleActions(
-  {
-    [SET_USER]: (state, action) =>
-      produce(state, (draft) => {
-        // setCookie("is_login", "success");
+
+export default handleActions({
+    [SET_USER]: (state, action) => produce(state, (draft)=>{
         draft.user = action.payload.user;
         draft.is_login = true;
-      }), //원본값을 복사한 값을 draft로 받아옴
-    // [LOG_OUT]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     deleteCookie("is_login");
-    //     draft.user = null;
-    //     draft.is_login = false;
-    //   }),
-    [GET_USER]: (state, action) => produce(state, (draft) => {}),
-  },
-  initialState
-);
+    }),
+    [OUT_USER]: (state, action) => produce(state, (draft)=>{
+        localStorage.removeItem('token');
+        draft.user = null;
+        draft.is_login = false;
+    })
+},initialState);
 
-// action creator export
 const actionCreators = {
-  setUser,
-  getUser,
-  logOut,
-  signupDB,
-  //   loginDB,
-  //   loginCheckDB,
-  //   logoutDB,
-};
+    setUser,
+    outUser,
+    signupDB,
+    loginDB,
+    loginCheckDB,
+}
 
 export { actionCreators };

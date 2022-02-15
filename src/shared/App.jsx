@@ -1,18 +1,31 @@
-import { Button, Grid } from "../elements";
-import "./App.css";
+import React from "react";
+import { Button, Grid } from '../elements';
+import './App.css';
+import Main from './../page/Main';
+import Detail from '../page/Detail';
 
 import Login from "../page/Login";
 import Signup from "../page/Signup";
-import Main from "./../page/Main";
-import Detail from "../page/Detail";
 import PostWrite from "../page/PostWrite";
 import Header from "../component/Header";
 
-import { Route } from "react-router-dom";
-import { ConnectedRouter } from "connected-react-router";
-import { history } from "../redux/configureStore";
+import { Route } from 'react-router-dom'
+import { ConnectedRouter } from 'connected-react-router';
+import { history } from '../redux/configureStore';
+import { useDispatch } from 'react-redux';
+import {actionCreators as userActions} from '../redux/modules/user'
 
 function App() {
+  const dispatch = useDispatch();
+  const token = localStorage.getItem('token');
+
+  React.useEffect(()=>{
+    if(token){
+      console.log('토큰있다!')
+      dispatch(userActions.loginCheckDB());
+    }
+  },[])
+
   return (
     <>
       <Header></Header>
@@ -26,13 +39,8 @@ function App() {
             <Route path="/detail" exact component={Detail} />
             <Route path="/detail/:id" exact component={Detail} />
             <Route path="/write" exact component={PostWrite} />
+            <Route path="/write/:id" exact component={PostWrite} />
           </Grid>
-          <Button
-            float_btn
-            _onClick={() => {
-              history.push("/write");
-            }}
-          ></Button>
         </ConnectedRouter>
       </Grid>
     </>
