@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Image, Text } from "../elements";
+import { Grid, Image, Text, Button } from "../elements";
 
 // import { history } from "../redux/configureStore";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,13 +21,45 @@ const Post = (props) => {
               {props.nickname}
             </Text>
           </Grid>
+
+          <Grid is_flex width="auto">
+          <Text>{props.insert_dt}</Text>
+          {props.is_me && (
+            <Button
+              width="auto"
+              margin="4px"
+              padding="4px"
+              _onClick={() => {
+                history.push(`/write/${props.id}`);
+              }}
+            >
+              수정
+            </Button>
+          )}
+          
+          {props.is_me && (
+            <Button
+              width="auto"
+              margin="4px"
+              padding="4px"
+              _onClick={() => {
+                dispatch(postActions.deletePostFB(props.id));
+                // history.replace(`/`);
+              }}
+            >
+              삭제
+            </Button>
+          )}
+        </Grid>
+          
           <Text width="max-content" color="#888" bold="300">
             {props.date}
           </Text>
         </Grid>
 
         <Grid>
-          <Grid padding="20px 16px 25px">
+          <Grid padding="20px 16px 25px"
+>
             <Text space="0em">{props.content}</Text>
           </Grid>
           <Image src={props.imgUrl} shape="rectangle" />

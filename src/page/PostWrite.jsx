@@ -7,7 +7,7 @@ import { actionCreators as postActions } from "../redux/modules/post";
 
 const PostWrite = (props) => {
   const dispatch = useDispatch();
-  // const is_login = useSelector((state) => state.user.is_login);
+  const is_login = useSelector((state) => state.user.is_login);
   // const preview = useSelector((state) => state.image.preview);
   const post_list = useSelector((state) => state.post.list);
 
@@ -38,9 +38,9 @@ const PostWrite = (props) => {
   //     return;
   //   }
 
-  //   if (is_edit) {
-  //     dispatch(imageActions.setPreview(_post.image_url));
-  //   }
+    // if (is_edit) {
+    //   dispatch(imageActions.setPreview(_post.image_url));
+    // }
   // }, []);
 
   const changeContents = (e) => {
@@ -59,23 +59,23 @@ const PostWrite = (props) => {
     dispatch(postActions.addPostDB(contents));
   };
 
-  // if (!is_login) {
-  //   return (
-  //     <Grid margin="100px 0px" padding="16px" center>
-  //       <Text size="32px" bold>
-  //         앗 잠깐!
-  //       </Text>
-  //       <Text size="16px">로그인 후에만 글을 쓸 수 있어요!</Text>
-  //       <Button
-  //         _onClick={() => {
-  //           history.replace("/");
-  //         }}
-  //       >
-  //         로그인 하러가기
-  //       </Button>
-  //     </Grid>
-  //   );
-  // }
+  if (!is_login) {
+    return (
+      <Grid margin="100px 0px" padding="16px" center>
+        <Text size="32px" bold>
+          앗 잠깐!
+        </Text>
+        <Text size="16px">로그인 후에만 글을 쓸 수 있어요!</Text>
+        <Button
+          _onClick={() => {
+            history.replace("/");
+          }}
+        >
+          로그인 하러가기
+        </Button>
+      </Grid>
+    );
+  }
 
   return (
     <React.Fragment>

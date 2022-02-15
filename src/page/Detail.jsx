@@ -14,7 +14,7 @@ const Detail = (props) => {
     const dispatch = useDispatch()
     const id = props.match.params.id;
     const post_list = useSelector(state => state.post.list);
-    const post = post_list.find(a => a.id === +id);
+    const post = post_list.find(a => a.postId === +id);
     
     React.useEffect(()=>{
         if(!post){

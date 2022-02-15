@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Post from "../component/Post";
 import UserList from "../component/UserList";
-import { Grid } from "../elements";
+import { Grid, Button } from "../elements";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -13,6 +13,7 @@ import { history } from "../redux/configureStore";
 const Main = (props) => {
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
+  console.log("post_list : ", post_list)
 //   const user_info = useSelector((state) => state.user.user);
   const { history } = (props);
 
@@ -33,13 +34,13 @@ const Main = (props) => {
           <UserList />
         </UserListWrap>
         <Grid width="70%" margin="120px 0 0 0">
-          {post_list.map((p) => {
+          {post_list?.map((p) => {
             return (
               <Grid
-                key={p.id}
+                key={p.postId}
                 margin="0 0 50px 0"
                 _onClick={() => {
-                  history.push(`/detail/${p.id}`);
+                  history.push(`/detail/${p.postId}`);
                 }}
               >
                 <Post {...p}/>
