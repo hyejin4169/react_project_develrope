@@ -3,16 +3,17 @@ import styled from "styled-components";
 
 import Post from "../component/Post";
 import UserList from "../component/UserList";
-import { Grid, Button, Text } from "../elements";
+import { Grid, Button } from "../elements";
+
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
-import { history } from "../redux/configureStore";
 import Permit from './../shared/Permit';
 
 
 const Main = (props) => {
   const dispatch = useDispatch();
+
   const { history } = (props);
 
   const token = localStorage.getItem('token');
@@ -40,13 +41,13 @@ const Main = (props) => {
           )}
         </UserListWrap>
         <Grid width="70%" margin="120px 0 0 0">
-          {post_list.map((p) => {
+          {post_list?.map((p) => {
             return (
               <Grid
-                key={p.id}
+                key={p.postId}
                 margin="0 0 50px 0"
                 _onClick={() => {
-                  history.push(`/detail/${p.id}`);
+                  history.push(`/detail/${p.postId}`);
                 }}
               >
                 <Post {...p}/>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid } from '../elements';
+import { Grid } from '../elements';
 import './App.css';
 import Main from './../page/Main';
 import Detail from '../page/Detail';
@@ -21,10 +21,9 @@ function App() {
 
   React.useEffect(()=>{
     if(token){
-      console.log('토큰있다!')
       dispatch(userActions.loginCheckDB());
     }
-  },[])
+  },[token])
 
   return (
     <>

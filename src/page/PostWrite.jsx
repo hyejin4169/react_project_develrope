@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Text, Button, Image, Input } from "../elements";
+import { Grid, Text, Button, Input } from "../elements";
 import Upload from "../shared/Upload";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 const PostWrite = (props) => {
   const dispatch = useDispatch();
-  // const preview = useSelector((state) => state.image.preview);
+
   const is_login = useSelector((state) => state.user.is_login);
   const post_list = useSelector((state) => state.post.list);
   console.log(is_login);
@@ -22,6 +22,7 @@ const PostWrite = (props) => {
   const [contents, setContents] = React.useState(""); //수정기능
   //post 있는 경우엔 contents 넣어주고 없으면 빈값
   const [disabled, setDisabled] = React.useState(false);
+
 
   const changeContents = (e) => {
     setContents(e.target.value);
@@ -47,6 +48,7 @@ const PostWrite = (props) => {
         <Button _onClick={()=>{history.replace('/login')}} width='15vw' minWidth='100px' margin='7vh 0 0 0'>로그인</Button>
       </Grid>
     )
+
   }
 
   return (

@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configureStore";
 
-import HomeIcon from "@material-ui/icons/Home";
 import styled from "styled-components";
 import Image from './../elements/Image';
 import Logo from './Logo';
