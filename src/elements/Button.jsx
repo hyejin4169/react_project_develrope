@@ -2,21 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = (props) => {
-    const {children, text, width, bgc, color, radius, height, margin, float_btn, _onClick,} = props;
+    const {children, text, width, bgc, color, radius, height, margin, float_btn, _onClick, _disabled,} = props;
 
     const styles = {
-        width, bgc, color, radius, height, margin, float_btn, _onClick,
+        width, bgc, color, radius, height, margin, float_btn, _onClick, 
     };
 
     if(float_btn){
         return(
-            <FloatButton onClick={_onClick}/>
+            <FloatButton onClick={_onClick} />
         ) 
     }
 
     return (
         <>
-            <B {...styles} onClick={_onClick}>
+            <B {...styles} onClick={_onClick} disabled={_disabled}>
                 {text ? text : children}
             </B>
         </>
@@ -34,6 +34,7 @@ Button.defaultProps={
     margin: false,
     float_btn: false,
     _onClick: ()=>{},
+    _disabled: false,
 }
 
 const B = styled.button`
@@ -46,6 +47,11 @@ const B = styled.button`
     border-radius: ${props => props.radius};
     ${props => props.margin? `margin: ${props.margin};` : ''}
     cursor: pointer;
+    transition: 0.3s;
+
+    &:disabled {
+        opacity: 0.7;
+    }
 `;
 
 const FloatButton = styled.button`

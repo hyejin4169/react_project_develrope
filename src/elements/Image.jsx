@@ -21,16 +21,27 @@ const Image = (props) => {
 
     return (
         <>
+            <JustImage {...styles} />
         </>
     );
 };
 
 Image.defaultProps = {
-    shape: 'rectangle',
+    shape: false,
     size: '40px',
     src: 'https://t1.daumcdn.net/cfile/blog/1676324D4DE12D7415', 
     margin: false,
 }
+
+const JustImage = styled.div`
+    --size: ${(props) => props.size}; 
+    width: var(--size);
+    height: var(--size);
+    background-image: url(${props => props.src});
+    background-size: cover;
+    background-position: center;
+    ${props => props.margin ? `margin: ${props.margin};` : ''}
+`
 
 const ImageBoxCircle = styled.div`
     --size: ${(props) => props.size}; 

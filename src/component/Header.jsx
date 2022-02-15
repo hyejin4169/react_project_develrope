@@ -1,8 +1,8 @@
 import React from "react";
 import { Grid, Text, Button } from "../elements";
 
-// import { useSelector, useDispatch } from "react-redux";
-// import { actionCreators as userActions } from "../redux/modules/user";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configureStore";
 // import { apiKey } from "../shared/firebase";
 
@@ -11,27 +11,45 @@ import HomeIcon from "@material-ui/icons/Home";
 import styled from "styled-components";
 
 const Header = (props) => {
+  const token = localStorage.getItem('token');
+  const is_login = useSelector(state => state.user.is_login);
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(userActions.outUser());
+    history.replace('/')
+  }
+
+  if(token && is_login){
+    return(
+      <React.Fragment>
+      <HeaderWrap>
+        <Grid flex maxWidth='1200px' margin='0 auto'>
+          <Grid>
+            <HomeIcon
+              fontSize="large"
+              margin="0px"
+              // size="25px"
+              cursor="pointer"
+              onClick={() => {
+                history.push('/')
+              }}
+            />
+          </Grid>
+
+          <Grid flex>
+            <Button
+              text="로그아웃"
+              _onClick={logout}
+            />
+          </Grid>        
+        </Grid>
+      </HeaderWrap>
+    </React.Fragment>
+    )
+  }
+
   return (
-    //   <React.Fragment>
-    //     <Grid flex padding="4px 16px">
-    //       <Grid>
-    //         <HomeIcon fontSize="large"
-    //           margin="0px"
-    //           // size="25px"
-    //           cursor="pointer"
-    //         >
-    //         </HomeIcon>
-    //       </Grid>
-
-    //       <Grid flex>
-    //         <Button text="내정보"></Button>
-    //         <Button text="로그아웃"></Button>
-    //       </Grid>
-    //     </Grid>
-    //   </React.Fragment>
-    // );
-
-    //   return (
     <React.Fragment>
       <HeaderWrap>
         <Grid flex maxWidth='1200px' margin='0 auto'>
@@ -41,7 +59,10 @@ const Header = (props) => {
               margin="0px"
               // size="25px"
               cursor="pointer"
-            ></HomeIcon>
+              onClick={() => {
+                history.push('/')
+              }}
+            />
           </Grid>
 
           <Grid flex>

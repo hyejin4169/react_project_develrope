@@ -7,7 +7,7 @@
       "content": "너무 졸려요. 살려주세요.",
       "imgUrl": "https://post-phinf.pstatic.net/MjAxODA5MTBfMTE4/MDAxNTM2NTYxNzcyNzM5.yrHHJfPfuGHyIzuYrKJ7OkvJqF09taHupE9QzHuFG9sg.uGaZqSOID-_r6JBZtUOefL2hXprvOUOBby4NUOkaRdsg.JPEG/180910_%EC%96%B4%EC%A9%90%EC%A7%80_%EB%8D%94_%ED%94%BC%EA%B3%A4%ED%95%9C_%EA%B2%83_%EA%B0%99%EB%8D%94%EB%9D%BC%EB%8B%88-%EC%B9%B4%EB%93%9C%EB%89%B4%EC%8A%A4%28%EB%84%A4%EC%9D%B4%EB%B2%84%EC%9A%A9%29.jpg",
       "userIcon": "https://post-phinf.pstatic.net/MjAxODA5MTBfMTE4/MDAxNTM2NTYxNzcyNzM5.yrHHJfPfuGHyIzuYrKJ7OkvJqF09taHupE9QzHuFG9sg.uGaZqSOID-_r6JBZtUOefL2hXprvOUOBby4NUOkaRdsg.JPEG/180910_%EC%96%B4%EC%A9%90%EC%A7%80_%EB%8D%94_%ED%94%BC%EA%B3%A4%ED%95%9C_%EA%B2%83_%EA%B0%99%EB%8D%94%EB%9D%BC%EB%8B%88-%EC%B9%B4%EB%93%9C%EB%89%B4%EC%8A%A4%28%EB%84%A4%EC%9D%B4%EB%B2%84%EC%9A%A9%29.jpg",
-      "comment_cnt": 0,
+      "comment_cnt": 15,
       "date": "2022-02-12 12:00:00"
     }
   ],
@@ -15,9 +15,146 @@
     {
       "id": 2,
       "userId": 3,
-      "nickname": "Ricky", 
+      "nickname": "Ricky",
+      "comment": "댓글 테스트 중입니다아아아",
+      "date": "2022-02-12 12:00:00",
       "postId": 1,
-      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a" 
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a"
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "지금!",
+      "date": "2022-02-14 06:23:40",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 3
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "테스트를 해보도록 하자!",
+      "date": "2022-02-14 18:32:27",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 4
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "잘 될까?",
+      "date": "2022-02-14 18:33:50",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 5
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "ㄴㄴㅁㄻㄴ",
+      "date": "2022-02-14 18:35:00",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 6
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "ㄻㄴㅇㄻㄴ",
+      "date": "2022-02-14 18:40:27",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 7
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "아아아",
+      "date": "2022-02-14 19:31:32",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 8
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "ㅁㄴㄹㄴㅇㄹ",
+      "date": "2022-02-14 19:34:39",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 9
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "ㅁㄴㅇㄹㄴㅁㅇㄹㄴㅁ",
+      "date": "2022-02-14 19:37:46",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 10
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "ㅁㅁㅁㅁㅁ",
+      "date": "2022-02-14 19:38:53",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 11
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "아이우에오",
+      "date": "2022-02-14 19:39:55",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 12
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "왜 안지워질까요?",
+      "date": "2022-02-14 20:13:07",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 13
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "이젠",
+      "date": "2022-02-14 20:17:28",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 14
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "ㅁㄴㅇㄻㄴㅇㄹ",
+      "date": "2022-02-14 20:18:59",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 15
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "될거 같다 솔직히",
+      "date": "2022-02-14 20:22:31",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 16
+    },
+    {
+      "userId": 3,
+      "nickname": "Ricky",
+      "comment": "ㄴ머이ㅏ럼나ㅣㅇ러",
+      "date": "2022-02-14 21:21:01",
+      "postId": "1",
+      "userIcon": "https://item.kakaocdn.net/do/493188dee481260d5c89790036be0e66f604e7b0e6900f9ac53a43965300eb9a",
+      "id": 17
     }
   ],
   "user": {
@@ -26,6 +163,5 @@
     "nickname": "Daisy",
     "git": "www.naver.com",
     "blog": "www.google.com"
-
   }
 }
