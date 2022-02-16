@@ -21,6 +21,8 @@ const Grid = (props) => {
     direction,
     align,
     _onClick,
+    overflow,
+    radius,
   } = props;
 
   const styles = {
@@ -40,6 +42,8 @@ const Grid = (props) => {
     direction,
     align,
     _onClick,
+    overflow,
+    radius,
   };
   return (
     <>
@@ -68,6 +72,8 @@ Grid.defaultProps = {
   direction: "row",
   align: false,
   _onClick: () => {},
+  overflow: null,
+  radius: null,
 };
 
 const GridBox = styled.div`
@@ -77,17 +83,14 @@ const GridBox = styled.div`
   box-sizing: border-box;
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
-    ${(props) =>
-    props.flex
-      ? `display: flex; align-items: center; justify-content: ${props.justify}; flex-direction: ${props.direction}; align-content: $`
-      : ""}
-    ${(props) => (props.bgc ? `background-color: ${props.bgc};` : "")}
-    ${(props) =>
-    props.ps
-      ? `position: ${props.ps}; top: ${props.top}; left: ${props.left};`
-      : ""}
-    ${(props) => (props.borderB ? `border-bottom: ${props.borderB};` : "")}
-    ${(props) => (props.border ? `border: ${props.border};` : "")}
+  ${(props) => props.flex ? 
+    `display: flex; align-items: center; justify-content: ${props.justify}; flex-direction: ${props.direction}; align-items: ${props.align};`: ""};
+  ${(props) => (props.bgc ? `background-color: ${props.bgc};` : "")}
+  ${(props) => props.ps ? `position: ${props.ps}; top: ${props.top}; left: ${props.left};` : ""}
+  ${(props) => (props.borderB ? `border-bottom: ${props.borderB};` : "")}
+  ${(props) => (props.border ? `border: ${props.border};` : "")}
+  ${(props) => (props.overflow ? `overflow: ${props.overflow};` : "")}
+  ${(props) => (props.radius ? `border-radius: ${props.radius};` : "")}
 `;
 
 export default Grid;

@@ -5,17 +5,23 @@ import axios from "axios";
 // 액션
 const SET_USER = 'SET_USER';
 const OUT_USER = 'OUT_USER';
+const SET_USERLIST= 'SET_USERLIST';
+const SET_USERLIST_ALL= 'SET_USERLIST_ALL';
 
 // 액션 함수
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const outUser = createAction(OUT_USER, () => ({ }));
+const setUserList = createAction(SET_USERLIST, (user_list) => ({user_list}));
+const setUserListAll = createAction(SET_USERLIST_ALL, (user_list) => ({user_list}));
 
 const initialState = {
     user: null,
     is_login: false,
+    user_list: [],
+    user_list_all: [],
 }
 
-const signupDB = (email, password,check_password, nickname, git, blog, blogtype, userIcon='https://post-phinf.pstatic.net/MjAxODA5MTBfMTE4/MDAxNTM2NTYxNzcyNzM5.yrHHJfPfuGHyIzuYrKJ7OkvJqF09taHupE9QzHuFG9sg.uGaZqSOID-_r6JBZtUOefL2hXprvOUOBby4NUOkaRdsg.JPEG/180910_%EC%96%B4%EC%A9%90%EC%A7%80_%EB%8D%94_%ED%94%BC%EA%B3%A4%ED%95%9C_%EA%B2%83_%EA%B0%99%EB%8D%94%EB%9D%BC%EB%8B%88-%EC%B9%B4%EB%93%9C%EB%89%B4%EC%8A%A4%28%EB%84%A4%EC%9D%B4%EB%B2%84%EC%9A%A9%29.jpg') => {
+const signupDB = (email, password,check_password, nickname, git, blog, blogtype, userIcon='https://cdn.imweb.me/upload/S20200903356594b8dc821/122e89b0892d2.jpg') => {
     return async function(dispatch, getState, {history}){
 
         try {
@@ -70,7 +76,7 @@ const loginDB = (email, pwd) => {
             };
 
         } catch(err){
-            window.alert('회원가입에 실패했습니다.')
+            window.alert('아이디와 비밀번호를 다시 확인해주세요.')
             console.log(err)
         }
     }
@@ -78,12 +84,11 @@ const loginDB = (email, pwd) => {
 
 const loginCheckDB = () => {
     return async function(dispatch, getState, {history}){
-        console.log('되나?')
         try{
             const check = await axios.get('http://3.35.132.95/api/auth',{
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
+                },
             })
             if(check.data.ok === true){
                 dispatch(setUser({
@@ -101,6 +106,41 @@ const loginCheckDB = () => {
     }
 }
 
+const getSixUsersDB = () => {
+    return async function(dispatch, getState, {history}){
+        const user_nick = getState().user.user?.nickname;
+        try{
+            const users = await axios.get('http://3.35.132.95/api/user',{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+            })
+            let user_list = users.data.user.filter(a=>a.nickname !== user_nick);
+            user_list.length === 6 && user_list.pop();
+            dispatch(setUserList(user_list))
+        } catch(err){
+
+        }
+    }
+}
+
+const getAllUsersDB = () => {
+    return async function(dispatch, getState, {history}){
+        const user_nick = getState().user.user.nickname;
+        try{
+            const users = await axios.get('http://3.35.132.95/api/users',{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+            })
+            let user_list = users.data.user.filter(a=>a.nickname !== user_nick);
+            dispatch(setUserListAll(user_list))
+        } catch(err){
+
+        }
+    }
+}
+
 
 export default handleActions({
     [SET_USER]: (state, action) => produce(state, (draft)=>{
@@ -111,15 +151,25 @@ export default handleActions({
         localStorage.removeItem('token');
         draft.user = null;
         draft.is_login = false;
+    }),
+    [SET_USERLIST]: (state, action) => produce(state, (draft) => {
+        draft.user_list = action.payload.user_list
+    }),
+    [SET_USERLIST_ALL]: (state, action) => produce(state, (draft) => {
+        draft.user_list_all = action.payload.user_list
     })
 },initialState);
 
 const actionCreators = {
     setUser,
     outUser,
+    setUserList,
+    setUserListAll,
     signupDB,
     loginDB,
     loginCheckDB,
+    getSixUsersDB,
+    getAllUsersDB,
 }
 
 export { actionCreators };

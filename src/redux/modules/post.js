@@ -67,7 +67,6 @@ const getOnePostDB = (postId) => {
     axios
       .get(`http://3.35.132.95/api/detail/${postId}`)
       .then((res) => {
-        console.log("res : ", res);
         dispatch(getPost([res.data.detail]));
       })
       .catch((err) => {
@@ -79,6 +78,7 @@ const getOnePostDB = (postId) => {
 
 const addPostDB = (content) => {
   return async function (dispatch, getState, { history }) {
+
     const user_info = getState().user.user; //user 정보 가져옴
     const doc = {
       //db에 요청할 정보들

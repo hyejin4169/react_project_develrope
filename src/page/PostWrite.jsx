@@ -1,16 +1,22 @@
 import React from "react";
-import { Grid, Text, Button, Image, Input } from "../elements";
+import { Grid, Text, Button, Input } from "../elements";
 import Upload from "../shared/Upload";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
+
+import styled from "styled-components";
 import { actionCreators as imageActions } from "../redux/modules/image";
+
 
 const PostWrite = (props) => {
   const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.user.is_login);
-  const preview = useSelector((state) => state.image.preview);
-  const post_list = useSelector((state) => state.post.list);
 
+  const is_login = useSelector((state) => state.user.is_login);
+
+  const preview = useSelector((state) => state.image.preview);
+
+  const post_list = useSelector((state) => state.post.list);
+  console.log(is_login);
   const post_id = props.match.params.id;
   console.log("post_id : ", post_id)
   const is_edit = post_id ? true : false;
@@ -23,6 +29,7 @@ const PostWrite = (props) => {
   const [contents, setContents] = React.useState(_post ? _post.content : ''); //수정기능
   //post 있는 경우엔 contents 넣어주고 없으면 빈값
   const [disabled, setDisabled] = React.useState(false);
+
 
   React.useEffect(() => {
     if (!preview || !contents) {
@@ -64,6 +71,7 @@ const PostWrite = (props) => {
     dispatch(postActions.addPostDB(contents));
   };
 
+
   const editPost = () => {
     if (!contents) {
       window.alert("내용을 작성해주세요!");
@@ -76,57 +84,50 @@ const PostWrite = (props) => {
     dispatch(postActions.editPostDB(contents, post_id));
   };
 
-  if (!is_login) {
-    return (
-      <Grid margin="100px 0px" padding="16px" center>
-        <Text size="32px" bold>
-          앗 잠깐!
-        </Text>
-        <Text size="16px">로그인 후에만 글을 쓸 수 있어요!</Text>
-        <Button
-          _onClick={() => {
-            history.replace("/");
-          }}
-        >
-          로그인 하러가기
-        </Button>
-      </Grid>
-    );
-  }
+ if(!is_login){
+    return(
+      <Grid flex direction='column' justify='center' align='center' padding='10vh 0 0 0'>
+        <Text bold='700' size='30px'>앗, 포스팅 전에</Text>
+        <Text bold='700' size='30px' margin='1vw 0 0 0'>먼저 로그인해주세요!</Text>
+        <Button _onClick={()=>{history.replace('/login')}} width='15vw' minWidth='100px' margin='7vh 0 0 0'>로그인</Button>
 
   return (
-    <React.Fragment>
-      <Grid padding="16px">
-        <Text margin="0px" size="36px" bold>
+    <>
+      <Grid flex justify='center' padding='5vh 16px 0 16px' margin='5vh 0'>
+        <Text margin="0px" size="30px" bold='700'>
           {is_edit ? "게시글 수정" : "게시글 작성"}
         </Text>
         <Upload />
       </Grid>
 
-      <Grid>
-        <Grid pading="16px">
-          <Text margin="0px" size="24px" bold>
-            미리보기
-          </Text>
-        </Grid>
-
-        <Image
-          shape="rectangle"
-          src={preview? preview : "https://via.placeholder.com/400x300"}
-        />
-      </Grid>
-
       <Grid flex padding="16px">
-        <Input
-          value={contents} //수정기능: 먼저 value 넘겨줌
-          _onChange={changeContents}
-          label="게시글 내용"
-          placeholder="게시글 작성"
-          multiLine
-        />
+        <Grid>
+          <Grid margin='0 0 50px 0'>
+            <Upload />
+          </Grid>
+          <Input
+            value={contents} //수정기능: 먼저 value 넘겨줌
+            _onChange={changeContents}
+            label="게시글 내용"
+            placeholder="포스팅 내용을 작성해주세요 :-)"
+            multiLine
+          />
+        </Grid>
+        <Grid ps='relative' radius='8px' overflow='hidden' margin='0 0 0 20px'>
+          {preview ? (
+            <Image
+              shape="rectangle"
+              src={preview}
+            />
+           ):(
+            <PreviewBox/>          
+           )}
+        </Grid>
       </Grid>
 
-      <Grid padding="16px">
+
+
+      <Grid center padding="16px" margin='2vh 0 0 0'>
         {is_edit ? (
           <Button
             text="게시글 수정"
@@ -142,8 +143,33 @@ const PostWrite = (props) => {
           ></Button>
         )}
       </Grid>
-    </React.Fragment>
+    </>
   );
 };
+
+const PreviewBox = styled.div`
+  width: 100%;
+  padding-top: 70%;
+  background-color: #dedede;
+  /* border-radius: 8px; */
+
+    &::before{
+      content: 'Preview';
+      color: #888; 
+      display: block;
+      width: 30vw;
+      height: 200px;
+      font-size: 2.5vw;
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      text-align: center;
+      line-height: 200px;
+      position: absolute;
+      top: calc(50% - 100px);
+      left: calc(50% - 15vw);
+
+    }
+`;
+
 
 export default PostWrite;

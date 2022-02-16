@@ -13,7 +13,11 @@ const Input = (props) => {
     value,
     is_submit,
     onSubmit,
+    padding,
+    _defaultValue,
   } = props;
+
+  const styles = {padding};
 
   if (multiLine) {
     return (
@@ -33,19 +37,33 @@ const Input = (props) => {
     <React.Fragment>
       <Grid>
         {label && <Text margin="0px">{label}</Text>}
-        {is_submit ? (
-          <ElInput
+        {is_submit ? (_defaultValue ? (
+            <ElInput
+            {...styles}
             type={type}
             placeholder={placeholder}
             onChange={_onChange}
-            value={value}
+            defaultValue={_defaultValue} 
             onKeyPress={(e) => {
               if (e.key === "Enter") {
                 onSubmit(e);
               }
             }}
           />
-        ) : (
+        ):(
+          <ElInput
+            {...styles}
+            type={type}
+            placeholder={placeholder}
+            onChange={_onChange}
+            value={value} 
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                onSubmit(e);
+              }
+            }}
+          />
+        )) : (
           <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
         )}
       </Grid>
@@ -59,10 +77,12 @@ Input.defaultProps = {
   label: false,
   placeholder: "텍스트를 입력해주세요.",
   type: "text",
-  value: "", //15번 라인과 연결
+  value: '', //15번 라인과 연결
   is_submit: false,
   onSubmit: () => {},
   _onChange: () => {},
+  padding: false,
+  _defaultValue: null,
 };
 
 const ElTextarea = styled.textarea`
@@ -73,10 +93,13 @@ const ElTextarea = styled.textarea`
 `;
 
 const ElInput = styled.input`
-  border: 1px solid #212121;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid #212121;
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
+  ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
 `;
 
 export default Input;
