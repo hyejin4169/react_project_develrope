@@ -7,11 +7,16 @@ import moment from "moment";
 
 const GET_POST = "GET_POST";
 const ADD_POST = "ADD_POST";
+const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 
 // action creators
 const getPost = createAction(GET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
+const editPost = createAction(EDIT_POST, (post_id, post) => ({
+  post_id,
+  post,
+}));
 const deletePost = createAction(DELETE_POST, (post_index) => ({
   post_index,
 }));
@@ -53,12 +58,10 @@ const getPostDB = () => {
 const getOnePostDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     axios
-      .get(`http://3.35.132.95/api/detail/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-      }})
+      .get(`http://3.35.132.95/api/detail/${postId}`)
       .then((res) => {
-        dispatch(getPost([res.data]));
+        console.log("res : ", res)
+        dispatch(getPost([res.data.detail]));
       })
       .catch((err) => {
         window.alert("해당 글을 불러올 수 없어요!");
@@ -99,10 +102,39 @@ const addPostDB = (content) => {
   };
 };
 
+const editPostDB = (content, postId) => {
+  return async function (dispatch, getState, { history }) {
+    if (!postId) {
+      console.log("게시물 정보가 없어요!");
+      return;
+    }
+
+      const _post_idx = getState().post.list.findIndex((p) => p.postId === postId);
+      const _post = getState().post.list[_post_idx];
+
+      axios
+        .put(`http://3.35.132.95/api/item/${postId}`, {content: content, imgUrl: "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg"}, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+
+        .then((res) => {
+          dispatch(editPost(postId, {..._post, content: content, imgUrl: "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg"}));
+          history.replace('/')
+        })
+        .catch((err) => {
+          window.alert("글을 수정할 수 없어요!");
+          console.log("글 수정하기 실패!", err);
+        });
+    };
+  };
+
+
 const deletePostDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     if (!postId) {
-    window.confirm("삭제하시겠습니까?");
+    return;
     }
 
     const _post = getState().post.list;
@@ -139,6 +171,12 @@ export default handleActions(
         draft.list.unshift(action.payload.post);
       }),
 
+    [EDIT_POST]: (state, action) =>
+    produce(state, (draft) => {
+      let idx = draft.list.findIndex((p) => p.id === action.payload.post_id); //id로 내가 뭘 수정할건지 찾아야함(리스트에서 몇번째인걸 고칠건지)
+      draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
+    }),
+
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = state.list.filter((l, idx) => {
@@ -155,8 +193,8 @@ const actionCreators = {
   getOnePostDB,
   addPost,
   addPostDB,
-  //   editPost,
-  //   editPostDB,
+  editPost,
+  editPostDB,
   deletePost,
   deletePostDB,
 };
