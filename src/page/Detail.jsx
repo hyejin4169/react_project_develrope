@@ -15,6 +15,7 @@ const Detail = (props) => {
     const id = props.match.params.id;
     const post_list = useSelector(state => state.post.list);
     const post = post_list.find(a => a.postId === +id);
+    console.log("post : ", post)
     
     React.useEffect(()=>{
         if(!post){
