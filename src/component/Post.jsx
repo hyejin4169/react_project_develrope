@@ -12,6 +12,14 @@ const Post = (props) => {
   const post_list = useSelector((state) => state.post.list);
   const user_info = useSelector((state) => state.user.user);
 
+const deletePost = () => {
+  if (window.confirm('게시글을 삭제하시겠습니까?')) {
+    return dispatch(postActions.deletePostDB(props.postId));
+  } else {
+    return;
+  };
+};
+
   return (
     <>
       <Grid border="1px solid #eee">
@@ -37,9 +45,7 @@ const Post = (props) => {
 
             {props.userId === user_info?.uid ? (
               <Button
-                _onClick={() => {
-                  dispatch(postActions.deletePostDB(props.postId));
-                }}
+                _onClick={deletePost}
               >
                 삭제
               </Button>
