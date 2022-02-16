@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Text, Button, Input } from "../elements";
+import { Grid, Text, Button, Input, Image } from "../elements";
 import Upload from "../shared/Upload";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -90,6 +90,8 @@ const PostWrite = (props) => {
         <Text bold='700' size='30px'>앗, 포스팅 전에</Text>
         <Text bold='700' size='30px' margin='1vw 0 0 0'>먼저 로그인해주세요!</Text>
         <Button _onClick={()=>{history.replace('/login')}} width='15vw' minWidth='100px' margin='7vh 0 0 0'>로그인</Button>
+      </Grid>
+    )}
 
   return (
     <>
@@ -97,7 +99,6 @@ const PostWrite = (props) => {
         <Text margin="0px" size="30px" bold='700'>
           {is_edit ? "게시글 수정" : "게시글 작성"}
         </Text>
-        <Upload />
       </Grid>
 
       <Grid flex padding="16px">
