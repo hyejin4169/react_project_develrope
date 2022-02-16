@@ -22,6 +22,23 @@ const Signup = (props) => {
   const [email_check, setEmailCheck] = React.useState(false);
   const [nickname_check, setNicknameCheck] = React.useState(false);
 
+  const changeEmail = (e) => {
+    setId(e.target.value);
+    if(email_check){
+      setEmailCheck(false);
+    }
+  }
+
+  const changeNick = (e) => {
+    setUserName(e.target.value);
+    if(nickname_check){
+      setNicknameCheck(false);
+    }
+  }
+
+
+
+
   const emailCheckF = async() => {
     if(emailCheck(id)){
       try{
@@ -72,6 +89,11 @@ const Signup = (props) => {
       return;
     }
 
+    if (!pwdCheck(pwd)) {
+      window.alert("이메일 형식이 맞지 않습니다!");
+      return;
+    }
+
     if (pwd !== pwd_check) {
       window.alert("비밀번호와 비밀번호 확인이 일치하지 않습니다!");
       return;
@@ -94,20 +116,18 @@ const Signup = (props) => {
             <Input
               label="이메일"
               placeholder="이메일을 입력해주세요."
-              _onChange={(e) => {
-                setId(e.target.value);
-              }}/>
+              _onChange={changeEmail}/>
 
-                {(id!=='' && !emailCheck(id))&&(
-                <Text color='red'>
-                  이메일 형식이 올바르지 않습니다!
-                </Text>
-                )}
-                {(id!=='' && emailCheck(id))&&(
-                <Text color='green'>
-                  사용할 수 있는 이메일 형식입니다!
-                </Text>
-                )}             
+            {(id!=='' && !emailCheck(id))&&(
+            <Text color='red'>
+              이메일 형식이 올바르지 않습니다!
+            </Text>
+            )}
+            {(id!=='' && emailCheck(id))&&(
+            <Text color='green'>
+              사용할 수 있는 이메일 형식입니다!
+            </Text>
+            )}             
 
 
           </Grid>
@@ -120,9 +140,7 @@ const Signup = (props) => {
           <Input
             label="닉네임"
             placeholder="닉네임을 입력해주세요."
-            _onChange={(e) => {
-              setUserName(e.target.value);
-            }}
+            _onChange={changeNick}
           ></Input>
           <Button width="100px" margin="0 0 0 10px" _disabled={nickname_check ? true : false} _onClick={nicknameCheckF}>
             중복확인

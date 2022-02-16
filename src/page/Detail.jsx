@@ -5,10 +5,11 @@ import { Button } from '../elements';
 import CommentList from './../component/CommentList';
 import CommentWrite from './../component/CommentWrite';
 import { useSelector, useDispatch } from 'react-redux';
-import { actionCreators as postActions } from '../redux/modules/post';
 import Image from './../elements/Image';
 import Grid from './../elements/Grid';
 import styled from 'styled-components';
+import Permit from './../shared/Permit';
+import { actionCreators as postActions } from '../redux/modules/post';
 
 const Detail = (props) => {
     const dispatch = useDispatch()
@@ -37,11 +38,15 @@ const Detail = (props) => {
     }
 
     return (
-        <>
-            <Post {...post}/>
-            <CommentWrite id={id}/>
-            <CommentList id={id}/>
-            <Button float_btn _onClick={() => {history.push("/write");}} text={'댓글 작성'}/>
+        <>  
+            <Grid maxWidth='840px' padding='0 16px' margin='0 auto'>
+                <Post {...post}/>
+                <Permit>
+                    <CommentWrite id={id}/>
+                </Permit>
+                <CommentList id={id}/>
+                <Button float_btn _onClick={() => {history.push("/write");}} />
+            </Grid>
         </>
     );
 };

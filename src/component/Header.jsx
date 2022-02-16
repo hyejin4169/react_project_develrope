@@ -26,7 +26,7 @@ const Header = (props) => {
       <HeaderWrap>
         <Grid flex maxWidth='1200px' margin='0 auto'>
           <Grid>
-            <Heading>
+            <Heading onClick={()=>{history.push('/')}}>
               <Logo/>
             </Heading>
           </Grid>
@@ -60,7 +60,7 @@ const Header = (props) => {
       <HeaderWrap>
         <Grid flex maxWidth='1200px' margin='0 auto'>
           <Grid>
-            <Heading>
+            <Heading onClick={()=>{history.push('/')}}>
               <Logo/>
             </Heading>
           </Grid>
@@ -104,6 +104,7 @@ const HeaderWrap = styled.div`
 `;
 
 const Heading = styled.h1`
+  cursor: pointer;
   svg {
     margin-left: 20px;
     width: 230px;

@@ -8,7 +8,9 @@ import { Grid, Button } from "../elements";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as userActions } from "../redux/modules/user";
 import Permit from './../shared/Permit';
+import UserListAll from "../component/UserListAll";
 
 
 const Main = (props) => {
@@ -20,17 +22,53 @@ const Main = (props) => {
   const is_login = useSelector(state => state.user.is_login);
 
   const post_list = useSelector((state) => state.post.list);
+  const user_list = useSelector(state => state.user.user_list);
 
-    React.useEffect(() => {
-      dispatch(postActions.getPostDB());
-    }, []);
+  const [user_length, SetUserLength] = React.useState(false);
+
+  
+  React.useEffect(() => {
+    dispatch(postActions.getPostDB());
+  }, []);
+
+  
+  React.useEffect(()=>{
+    if(is_login, token){
+        dispatch(userActions.getSixUsersDB());
+    }
+  },[])
+  
+  const openUserList = () => {   
+    dispatch(userActions.getAllUsersDB());
+    SetUserLength(true);
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+  }
+
+  const closeUserList = () => {
+    const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+    SetUserLength(false);
+    dispatch(userActions.getSixUsersDB());
+  }
 
   return (
     <>
+        <ModalWrap user_length={user_length} onClick={closeUserList}/>
+          {user_length && (
+            <UserListAll/>
+          )}
       <Grid flex>
         <UserListWrap>
           {(token && is_login) && (
-            <UserList />
+            <>
+              <UserList is_login={is_login} token={token} user_list={user_list}/>
+              <Button text='더 많은 유저 보기' fz='16px' fw='500' width='200px' margin='0 auto' bgc='#092493' _onClick={openUserList}/>
+            </>
           )}
           {(!token || !is_login) && (
             <LoginCome>
@@ -54,30 +92,6 @@ const Main = (props) => {
               </Grid>
             );
           })}
-          <Grid margin="0 0 50px 0">
-            <Post />
-          </Grid>
-          <Grid margin="0 0 50px 0">
-            <Post />
-          </Grid>
-          <Grid margin="0 0 50px 0">
-            <Post />
-          </Grid>
-          <Grid margin="0 0 50px 0">
-            <Post />
-          </Grid>
-          <Grid margin="0 0 50px 0">
-            <Post />
-          </Grid>
-          <Grid margin="0 0 50px 0">
-            <Post />
-          </Grid>
-          <Grid margin="0 0 50px 0">
-            <Post />
-          </Grid>
-          <Grid margin="0 0 50px 0">
-            <Post />
-          </Grid>
         </Grid>
       </Grid>
       <Permit>
@@ -108,6 +122,17 @@ const LoginCome = styled.div`
         font-weight: 800;
       }
     }
+`
+
+const ModalWrap = styled.div`
+  width: 100vw;
+  height: ${props => props.user_length ? `100vh` : `0px`};
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000000bf;
+  z-index: 999999;
+  transition: 0.3s;
 `
 
 export default Main;

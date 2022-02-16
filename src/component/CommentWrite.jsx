@@ -25,6 +25,8 @@ const CommentWrite = (props) => {
                     _onClick={addComment} 
                     text={'작성하기'} 
                     width='10%' 
+                    minWidth='68px'
+                    height='40px'
                     margin='0 0 0 2%'/>
             </Grid>
         </>

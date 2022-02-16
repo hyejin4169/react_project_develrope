@@ -5,14 +5,20 @@ import axios from "axios";
 // 액션
 const SET_USER = 'SET_USER';
 const OUT_USER = 'OUT_USER';
+const SET_USERLIST= 'SET_USERLIST';
+const SET_USERLIST_ALL= 'SET_USERLIST_ALL';
 
 // 액션 함수
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const outUser = createAction(OUT_USER, () => ({ }));
+const setUserList = createAction(SET_USERLIST, (user_list) => ({user_list}));
+const setUserListAll = createAction(SET_USERLIST_ALL, (user_list) => ({user_list}));
 
 const initialState = {
     user: null,
     is_login: false,
+    user_list: [],
+    user_list_all: [],
 }
 
 const signupDB = (email, password,check_password, nickname, git, blog, blogtype, userIcon='https://cdn.imweb.me/upload/S20200903356594b8dc821/122e89b0892d2.jpg') => {
@@ -100,6 +106,41 @@ const loginCheckDB = () => {
     }
 }
 
+const getSixUsersDB = () => {
+    return async function(dispatch, getState, {history}){
+        const user_nick = getState().user.user?.nickname;
+        try{
+            const users = await axios.get('http://3.35.132.95/api/user',{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+            })
+            let user_list = users.data.user.filter(a=>a.nickname !== user_nick);
+            user_list.length === 6 && user_list.pop();
+            dispatch(setUserList(user_list))
+        } catch(err){
+
+        }
+    }
+}
+
+const getAllUsersDB = () => {
+    return async function(dispatch, getState, {history}){
+        const user_nick = getState().user.user.nickname;
+        try{
+            const users = await axios.get('http://3.35.132.95/api/users',{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+            })
+            let user_list = users.data.user.filter(a=>a.nickname !== user_nick);
+            dispatch(setUserListAll(user_list))
+        } catch(err){
+
+        }
+    }
+}
+
 
 export default handleActions({
     [SET_USER]: (state, action) => produce(state, (draft)=>{
@@ -110,15 +151,25 @@ export default handleActions({
         localStorage.removeItem('token');
         draft.user = null;
         draft.is_login = false;
+    }),
+    [SET_USERLIST]: (state, action) => produce(state, (draft) => {
+        draft.user_list = action.payload.user_list
+    }),
+    [SET_USERLIST_ALL]: (state, action) => produce(state, (draft) => {
+        draft.user_list_all = action.payload.user_list
     })
 },initialState);
 
 const actionCreators = {
     setUser,
     outUser,
+    setUserList,
+    setUserListAll,
     signupDB,
     loginDB,
     loginCheckDB,
+    getSixUsersDB,
+    getAllUsersDB,
 }
 
 export { actionCreators };

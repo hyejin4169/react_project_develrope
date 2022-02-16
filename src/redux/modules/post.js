@@ -53,12 +53,10 @@ const getPostDB = () => {
 const getOnePostDB = (postId) => {
   return async function (dispatch, getState, { history }) {
     axios
-      .get(`http://3.35.132.95/api/detail/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-      }})
+      .get(`http://3.35.132.95/api/detail/${postId}`)
       .then((res) => {
-        dispatch(getPost([res.data]));
+        console.log(res)
+        dispatch(getPost([res.data.detail]));
       })
       .catch((err) => {
         window.alert("해당 글을 불러올 수 없어요!");
