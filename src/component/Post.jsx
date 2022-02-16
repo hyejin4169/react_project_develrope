@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Image, Text, Button } from "../elements";
 
-// import { history } from "../redux/configureStore";
+import { history } from "../redux/configureStore";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -10,6 +10,15 @@ const Post = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post.list);
+  const user_info = useSelector((state) => state.user.user);
+
+const deletePost = () => {
+  if (window.confirm('게시글을 삭제하시겠습니까?')) {
+    return dispatch(postActions.deletePostDB(props.postId));
+  } else {
+    return;
+  };
+};
 
   return (
     <>
@@ -22,44 +31,34 @@ const Post = (props) => {
             </Text>
           </Grid>
 
-          <Grid is_flex width="auto">
-          <Text>{props.insert_dt}</Text>
-          {props.is_me && (
-            <Button
-              width="auto"
-              margin="4px"
-              padding="4px"
-              _onClick={() => {
-                history.push(`/write/${props.id}`);
-              }}
-            >
-              수정
-            </Button>
-          )}
-          
-          {props.is_me && (
-            <Button
-              width="auto"
-              margin="4px"
-              padding="4px"
-              _onClick={() => {
-                dispatch(postActions.deletePostFB(props.id));
-                // history.replace(`/`);
-              }}
-            >
-              삭제
-            </Button>
-          )}
-        </Grid>
-          
+          <Grid flex>
+            {props.userId === user_info?.uid ? (
+              <Button
+                _onClick={(e) => {
+                  e.stopPropagation();
+                  history.push(`/write/${props.postId}`);
+                }}
+              >
+                수정
+              </Button>
+            ) : null}
+
+            {props.userId === user_info?.uid ? (
+              <Button
+                _onClick={deletePost}
+              >
+                삭제
+              </Button>
+            ) : null}
+          </Grid>
+
           <Text width="max-content" color="#888" bold="300">
             {props.date}
           </Text>
         </Grid>
 
         <Grid>
-          <Grid padding="20px 16px 25px"
->
+          <Grid padding="20px 16px 25px">
             <Text space="0em">{props.content}</Text>
           </Grid>
           <Image src={props.imgUrl} shape="rectangle" />
