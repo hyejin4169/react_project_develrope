@@ -74,7 +74,7 @@ const Main = (props) => {
             <LoginCome>
               <p>지금 <span>로그인</span> 하시고</p>
               <p>다른 유저의 블로그를 방문해보세요</p>
-              <Button margin='3vh auto 0' width='250px' _onClick={()=>{history.push('/')}}>로그인</Button>
+              <Button margin='3vh auto 0' width='250px' _onClick={()=>{history.push('/login')}}>로그인</Button>
             </LoginCome>
           )}
         </UserListWrap>

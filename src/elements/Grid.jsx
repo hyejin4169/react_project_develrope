@@ -23,6 +23,7 @@ const Grid = (props) => {
     _onClick,
     overflow,
     radius,
+    grow,
   } = props;
 
   const styles = {

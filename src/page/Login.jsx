@@ -27,12 +27,12 @@ const Login = (props) => {
 
   return (
     <React.Fragment>
-      <Grid padding="16px">
+      <Grid padding="16px" maxWidth='650px' margin='0 auto'>
         <Text size="32px" bold>
           로그인
         </Text>
 
-        <Grid padding="16px 0px">
+        <Grid padding="16px 0px" margin="2vh auto 0">
         <Input
           label="이메일"
           placeholder="이메일을 입력해주세요."
@@ -45,13 +45,22 @@ const Login = (props) => {
           label="비밀번호"
           placeholder="비밀번호를 입력해주세요."
           type="password"
-          _onChange={changePwd}
+          _onChange={(e) => {
+            setPwd(e.target.value);
+          }}
+          value={pwd}
+          is_submit
+          onSubmit={logIn}
         />
       </Grid>
 
-      <Grid center><Button text="로그인하기" _onClick={logIn}></Button></Grid>
-      
-      {/* { _onClick={() => } history.push('/'); console.log("로그인!"); login();}}> */}
+
+      <Grid center><Button
+      margin='3vh auto 0'
+      width="130px"
+      height="46px"
+      text="로그인하기"
+      _onClick={logIn}></Button></Grid>
 
       </Grid>
     </React.Fragment>
