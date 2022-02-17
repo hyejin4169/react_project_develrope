@@ -33,7 +33,6 @@ const signupDB = (email, password,check_password, nickname, git, blog, blogtype,
                             git: git,
                             blog: blog,
                             // blogtype: blogtype,
-                            userIcon: userIcon,
                         });
             console.log(join);
             if(join.data.ok === true){

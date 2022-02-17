@@ -91,8 +91,8 @@ const PostWrite = (props) => {
         <Text bold='700' size='30px' margin='1vw 0 0 0'>먼저 로그인해주세요!</Text>
         <Button _onClick={()=>{history.replace('/login')}} width='15vw' minWidth='100px' margin='7vh 0 0 0'>로그인</Button>
       </Grid>
-    )}
-
+    )};
+        
   return (
     <>
       <Grid flex justify='center' padding='5vh 16px 0 16px' margin='5vh 0'>
