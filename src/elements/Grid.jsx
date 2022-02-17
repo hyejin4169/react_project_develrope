@@ -23,7 +23,6 @@ const Grid = (props) => {
     _onClick,
     overflow,
     radius,
-    self,
   } = props;
 
   const styles = {
@@ -45,7 +44,6 @@ const Grid = (props) => {
     _onClick,
     overflow,
     radius,
-    self,
   };
   return (
     <>
