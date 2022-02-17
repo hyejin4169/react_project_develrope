@@ -11,18 +11,16 @@ const UserList = (props) => {
     const user_list = props.user_list;
     const user_list_all = props.user_list_all;
 
-    console.log(user_list);
-
     return (
         <>
         {user_list_all ? (
-            <Grid height='450px' overflow='hidden'>
+            <UserListInner height='450px' overflow='hidden'>
                 {user_list_all?.map(a=>{
                     return(
                         <UserItem key={a._id} {...a}/> 
                     )
                 })}
-            </Grid>
+            </UserListInner>
         ) : (
             <Grid height='450px'>
                 {user_list?.map(a=>{
@@ -36,6 +34,25 @@ const UserList = (props) => {
     );
 };
 
+const UserListInner = styled.div`
+    width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #092493; 
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: #eee; 
+        border-radius: 4px;
+    }
+`
+
 export default UserList;
 
 
@@ -46,7 +63,7 @@ const UserItem = (props) => {
         <Grid flex padding='10px 10px' margin='0 0 10px 0' height='auto' >  
             <UserBox>
                 <Grid>
-                    <Image shape='circle' src={props.userIcon}/>
+                    <Image shape='circle' src={`/static/${props.userIcon}.jpg`}/>
                 </Grid>
                 <div>
                     <Text bold='700' size='16px'>
@@ -123,4 +140,5 @@ const UserButton = styled.button`
             fill: #666;
         }
     }
+
 `

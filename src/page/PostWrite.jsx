@@ -81,7 +81,7 @@ const PostWrite = (props) => {
       window.alert("이미지를 업로드해주세요!");
       return;
     }
-    dispatch(postActions.editPostDB(contents, post_id));
+    dispatch(postActions.editPostDB(contents, +post_id));
   };
 
  if(!is_login){

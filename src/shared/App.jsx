@@ -12,8 +12,9 @@ import Header from "../component/Header";
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router';
 import { history } from '../redux/configureStore';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {actionCreators as userActions} from '../redux/modules/user'
+import { actionCreators as postActions } from "../redux/modules/post";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +24,21 @@ function App() {
     if(token){
       dispatch(userActions.loginCheckDB());
     }
-  },[token])
+  },[])
+
+  React.useEffect(() => {
+    dispatch(postActions.getPostDB());
+  }, []);
+
+  const is_login = useSelector(state => state.user.is_login);
+  // const user_info = useSelector(state => state.user.user);
+
+
+  React.useEffect(()=>{
+    if(is_login && token){
+        dispatch(userActions.getSixUsersDB());
+    }
+  },[is_login])
 
   return (
     <>

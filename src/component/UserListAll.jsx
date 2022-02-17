@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import UserList from './UserList';
 import { useSelector } from 'react-redux';
+import { Text } from '../elements';
 
 const UserListAll = (props) => {
 
@@ -11,6 +12,8 @@ const UserListAll = (props) => {
     return (
         <>
             <ListModal>
+                <Text bold='700' margin='0 auto 4px' size='20px'>유저 리스트</Text>
+                <Text bold='300' margin='0 auto 20px' size='12px'>다른 개발자의 블로그를 구경해보세요</Text>
                 <UserList user_list_all={user_list_all}/>
             </ListModal>
         </>
@@ -29,7 +32,7 @@ const ListModal = styled.div`
     z-index: 99999999;
     border-radius: 10px;
     box-sizing: border-box;
-    padding: 60px;
+    padding: 30px 42px 80px 50px;
 
     opacity: 0;
     transform: translateY(20px);
@@ -37,6 +40,7 @@ const ListModal = styled.div`
     animation-delay: 0.2s;
     animation-duration: 0.8s;
     animation-fill-mode: forwards;
+
 
 
     @keyframes jjahn {

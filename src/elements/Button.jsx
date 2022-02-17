@@ -62,38 +62,44 @@ const B = styled.button`
 `;
 
 const FloatButton = styled.button`
-    width: 50px; 
-    height: 50px;
+    width: 60px; 
+    height: 60px;
     border-radius: 50%;
     background-color: #212121;
     border: none;
     position: fixed;
     right: 16px;
-    bottom: 50px;
+    bottom: 30px;
     cursor: pointer;
+    transition: 0.5s;
 
     &:before{
         content: '';
         display: block;
         width: 25px;
-        height: 6px;
+        height: 3px;
         border-radius: 6px;
         background-color: #fff;
         position: absolute;
         left: calc(50% - 12.5px);
-        top: calc(50% - 3px);
+        top: calc(50% - 1.5px);
     }
 
     &:after{
         content: '';
         display: block;
-        width: 6px;
+        width: 3px;
         height: 25px;
         border-radius: 6px;
         background-color: #fff;
         position: absolute;
-        left: calc(50% - 3px);
+        left: calc(50% - 1.5px);
         top: calc(50% - 12.5px);
+    }
+
+    &:hover {
+        transform: rotate(180deg);
+        background-color: #092493;
     }
 `
 

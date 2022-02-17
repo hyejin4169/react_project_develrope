@@ -87,7 +87,7 @@ const CommentItem = (props) => {
             <Grid flex padding='10px 16px' border='1px solid #eee' margin='10px 0'>
                 <Grid flex justify='flex-start' width='max-content'>
                     <Grid flex justify='flex-start' width='max-content' margin='0 2vw 0 0'>
-                        <Image src={props.userIcon} shape='circle' margin='0 1vw 0 0'/>
+                        <Image src={`static/${props.userIcon}.jpg`} shape='circle' margin='0 1vw 0 0'/>
                         <Text bold='700'>{props.nickname}</Text>
                     </Grid>
                     <Text>{props.comment}</Text>

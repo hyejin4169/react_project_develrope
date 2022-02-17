@@ -21,7 +21,7 @@ const initialState = {
     user_list_all: [],
 }
 
-const signupDB = (email, password,check_password, nickname, git, blog, blogtype, userIcon='https://cdn.imweb.me/upload/S20200903356594b8dc821/122e89b0892d2.jpg') => {
+const signupDB = (email, password,check_password, nickname, git, blog, blogtype) => {
     return async function(dispatch, getState, {history}){
 
         try {
@@ -32,15 +32,14 @@ const signupDB = (email, password,check_password, nickname, git, blog, blogtype,
                             nickname: nickname,
                             git: git,
                             blog: blog,
-                            // blogtype: blogtype,
-                            userIcon: userIcon,
+                            blogtype: blogtype,
                         });
             console.log(join);
             if(join.data.ok === true){
                 window.alert('성공적으로 회원가입하셨습니다!');
                 history.replace('/login');
             } else if(join.data.ok === false){
-                window.alert('회원가입에 실패했습니다.');
+                window.alert(join.data.errorMessage);
                 history.replace('/signup');
             }
 
@@ -115,7 +114,9 @@ const getSixUsersDB = () => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 },
             })
+            console.log(user_nick)
             let user_list = users.data.user.filter(a=>a.nickname !== user_nick);
+            console.log(user_list)
             user_list.length === 6 && user_list.pop();
             dispatch(setUserList(user_list))
         } catch(err){

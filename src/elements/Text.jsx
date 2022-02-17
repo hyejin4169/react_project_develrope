@@ -30,6 +30,7 @@ const P = styled.p`
     margin: ${props => props.margin};
     width: ${props => props.width};
     letter-spacing: ${props => props.space};
+    white-space: pre-wrap;
 `;
 
 export default Text;

@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from 'immer';
 import moment from 'moment';
 import axios from "axios";
+import { actionCreators as postActions } from "./post";
 
 // 액션
 const GET_COMMENT = 'GET_COMMENT';
@@ -49,9 +50,13 @@ const addCommentDB = (post_id, comment) => {
                 headers: {
                   Authorization: `Bearer ${localStorage.getItem('token')}`
               }});
-
-            if(_doc.data.ok){
-                dispatch(addComment(post_id, {...doc, commentId: _doc.data.commentId}));
+              console.log(_doc.data)
+              if(_doc.data.ok){
+                  dispatch(addComment(post_id, {...doc, commentId: _doc.data.commentId}));
+                  const idx = getState().post.list.findIndex(a=>a.postId === post_id);
+                  const post = getState().post.list[idx];
+                  console.log(post)
+                  dispatch(postActions.editPost(post_id, {comment_cnt: post.comment_cnt+1}))
             }
 
         } catch(err){
@@ -91,7 +96,13 @@ const deleteCommentDB = (post_id, comment_id) => {
               }})
 
               if(_delete.data.ok){
-                  dispatch(deleteComment(post_id, comment_id))
+
+                dispatch(deleteComment(post_id, comment_id))
+                const idx = getState().post.list.findIndex(a=>a.postId === post_id);
+                const post = getState().post.list[idx];
+              
+                dispatch(postActions.editPost(post_id, {comment_cnt: post.comment_cnt-1}))
+
               } else{
                   alert('댓글 삭제에 실패했습니다!')
               }

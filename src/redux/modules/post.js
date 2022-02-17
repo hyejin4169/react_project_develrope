@@ -20,13 +20,8 @@ const DELETE_POST = "DELETE_POST";
 // action creators
 const getPost = createAction(GET_POST, (post_list) => ({ post_list }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
-const editPost = createAction(EDIT_POST, (post_id, post) => ({
-  post_id,
-  post,
-}));
-const deletePost = createAction(DELETE_POST, (post_index) => ({
-  post_index,
-}));
+const editPost = createAction(EDIT_POST, (post_id, post) => ({ post_id, post }));
+const deletePost = createAction(DELETE_POST, (post_index) => ({ post_index }));
 
 // initialState
 const initialState = {
@@ -113,7 +108,6 @@ const addPostDB = (content) => {
         .then((url) => {
           // console.log("url 2 : ", url);
 
-          const image_data = { image_url: url };
           // console.log("image_data : ", image_data);
 
           axios
@@ -128,7 +122,7 @@ const addPostDB = (content) => {
             )
             .then((res) => {
               dispatch(
-                addPost({ ...doc, postId: res.data.postId, ...image_data })
+                addPost({ ...doc, postId: res.data.postId, imgUrl: url })
               );
 
               dispatch(imageActions.setPreview(null));
@@ -146,7 +140,7 @@ const addPostDB = (content) => {
   };
 };
 
-const editPostDB = (content, postId) => {
+const editPostDB = (content, postId=null) => {
   return async function (dispatch, getState, { history }) {
     if (!postId) {
       console.log("게시물 정보가 없어요!");
@@ -154,20 +148,19 @@ const editPostDB = (content, postId) => {
     }
 
     const _image = getState().image.preview;
+    
+    const _post_idx = getState().post.list.findIndex((p) => p.postId === postId );
 
-    const _post_idx = getState().post.list.findIndex(
-      (p) => p.postId === postId
-    );
     const _post = getState().post.list[_post_idx];
 
-    if (_image === postId.imgUrl) {
+
+    if (_image === _post.imgUrl) {
       axios
         .put(
           `http://3.35.132.95/api/item/${postId}`,
           {
             content: content,
-            imgUrl:
-              "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg",
+            imgUrl: _post.imgUrl,
           },
           {
             headers: {
@@ -176,41 +169,29 @@ const editPostDB = (content, postId) => {
           }
         )
         .then((res) => {
-          dispatch(
-            editPost(postId, {
-              ..._post,
-              content: content,
-              imgUrl:
-                "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg",
-            })
-          );
+          dispatch(editPost(postId, {content: content}));
+          history.replace("/");
         });
-      return;
-    } else {
-      const storageRef = ref(
-        storage,
-        `images/devel-rope_${new Date().getTime()}`
-      );
+
+    } else if (_image !== _post.imgUrl ) {
+
+      const storageRef = ref( storage, `images/devel-rope_${new Date().getTime()}`);
+
       const _upload = uploadString(storageRef, _image, "data_url");
+
       _upload.then((snapshot) => {
         console.log("snapshot : ", snapshot);
 
         getDownloadURL(snapshot.ref)
           .then((url) => {
-            console.log("url 1 : ", url);
-
             return url;
           })
           .then((url) => {
-            console.log("url 2 : ", url);
-
-            const image_data = { image_url: url };
-            console.log("image_data : ", image_data);
 
             axios
               .put(
                 `http://3.35.132.95/api/item/${postId}`,
-                { content, imgUrl: url },
+                { content: content, imgUrl: url },
                 {
                   headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -218,13 +199,7 @@ const editPostDB = (content, postId) => {
                 }
               )
               .then((res) => {
-                dispatch(
-                  editPost({
-                    ...content,
-                    postId: res.data.postId,
-                    ...image_data,
-                  })
-                );
+                dispatch(editPost(postId,{ imgUrl: url ,content: content}));
                 history.replace("/");
               })
               .catch((err) => {
@@ -236,7 +211,6 @@ const editPostDB = (content, postId) => {
             console.log("이미지 업로드 실패!", err);
           });
       });
-      return;
     }
   };
 };
@@ -284,7 +258,7 @@ export default handleActions(
 
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
-        let idx = draft.list.findIndex((p) => p.id === action.payload.post_id); //id로 내가 뭘 수정할건지 찾아야함(리스트에서 몇번째인걸 고칠건지)
+        let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id); //id로 내가 뭘 수정할건지 찾아야함(리스트에서 몇번째인걸 고칠건지)
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
       }),
 
