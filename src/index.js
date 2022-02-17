@@ -5,9 +5,12 @@ import App from './shared/App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import store from "./redux/configureStore";
+// import ScrollTop from "./component/ScrollTop";
+
 
 ReactDOM.render(
   <Provider store={store}>
+    {/* <ScrollTop /> */}
     <App />
   </Provider>,
   document.getElementById('root')
