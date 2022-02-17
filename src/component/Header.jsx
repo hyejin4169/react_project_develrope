@@ -45,6 +45,7 @@ const Header = (props) => {
               width='6vw'
               height='40px'
               minWidth='113px'
+              bgc='#092493'
               text="로그아웃"
               _onClick={logout}
             />

@@ -19,11 +19,16 @@ const CommentWrite = (props) => {
     return (
         <>  
             <Grid flex padding='16px'>
-                <Input placeholder='댓글을 입력해주세요 :-)' is_submit _onChange={changeContent} value={content}></Input>
+                <Input placeholder='댓글을 입력해주세요 :-)'
+                _onChange={changeContent}
+                value={content}
+                onSubmit={addComment}
+                is_submit
+                ></Input>
                 <Button 
                     _disabled={!content ? true : false}
                     _onClick={addComment} 
-                    text={'작성하기'} 
+                    text={'작성하기'}
                     width='10%' 
                     minWidth='68px'
                     height='40px'
