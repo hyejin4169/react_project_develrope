@@ -2,18 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Image = (props) => {
-    const{shape, size, src, margin} = props;
+    const{shape, size, src, margin, _onClick,} = props;
     const styles = {size, src, margin}
 
     if(shape === 'circle'){
         return(
-            <ImageBoxCircle {...styles}/>
+            <ImageBoxCircle {...styles} onClick={_onClick}/>
         )
     }
 
     if(shape === 'rectangle'){
         return(
-            <ImageBoxRectangleWrap {...styles}>
+            <ImageBoxRectangleWrap {...styles} onClick={_onClick}>
                 <ImageBoxRectangle {...styles}/>
             </ImageBoxRectangleWrap>
         )
@@ -31,6 +31,7 @@ Image.defaultProps = {
     size: '40px',
     src: 'https://t1.daumcdn.net/cfile/blog/1676324D4DE12D7415', 
     margin: false,
+    _onClick: ()=>{},
 }
 
 const JustImage = styled.div`

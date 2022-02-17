@@ -48,8 +48,9 @@ const Signup = (props) => {
         } else if (check.data.ok === false) {
           alert(check.data.errorMessage);
         }
-      } catch (err) {
-        console.log(err);
+
+      } catch(err){
+        alert('사용중인 이메일입니다!')
       }
     } else if (!emailCheck(id)) {
       alert("이메일 형식을 먼저 확인해주세요!");
@@ -68,8 +69,9 @@ const Signup = (props) => {
       } else if (check.data.ok === false) {
         alert(check.data.errorMessage);
       }
-    } catch (err) {
-      console.log(err);
+
+    } catch(err){
+      alert('사용중인 닉네임입니다!')
     }
   };
 

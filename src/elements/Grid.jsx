@@ -23,7 +23,6 @@ const Grid = (props) => {
     _onClick,
     overflow,
     radius,
-    grow,
   } = props;
 
   const styles = {
@@ -75,6 +74,7 @@ Grid.defaultProps = {
   _onClick: () => {},
   overflow: null,
   radius: null,
+  self: null,
 };
 
 const GridBox = styled.div`
@@ -92,6 +92,7 @@ const GridBox = styled.div`
   ${(props) => (props.border ? `border: ${props.border};` : "")}
   ${(props) => (props.overflow ? `overflow: ${props.overflow};` : "")}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : "")}
+  ${(props) => (props.self ? `justify-self: ${props.self};` : "")}
 `;
 
 export default Grid;

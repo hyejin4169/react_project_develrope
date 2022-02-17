@@ -46,7 +46,9 @@ const Detail = (props) => {
                     <CommentWrite id={id}/>
                 </Permit>
                 <CommentList id={id}/>
-                <Button float_btn _onClick={() => {history.push("/write");}} />
+                <Permit>
+                    <Button float_btn _onClick={() => {history.push("/write");}} />
+                </Permit>
             </Grid>
         </>
     );

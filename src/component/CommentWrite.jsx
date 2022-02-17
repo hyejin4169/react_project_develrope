@@ -12,7 +12,7 @@ const CommentWrite = (props) => {
     }
 
     const addComment = () => {
-        dispatch(commActions.addCommentDB(props.id, content));
+        dispatch(commActions.addCommentDB(+props.id, content));
         setContent('');
     }
 
