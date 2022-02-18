@@ -31,6 +31,8 @@ const P = styled.p`
     width: ${props => props.width};
     letter-spacing: ${props => props.space};
     white-space: pre-wrap;
+    word-break: normal;
+    word-wrap: break-word;
 `;
 
 export default Text;

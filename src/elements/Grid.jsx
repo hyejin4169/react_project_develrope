@@ -93,6 +93,9 @@ const GridBox = styled.div`
   ${(props) => (props.overflow ? `overflow: ${props.overflow};` : "")}
   ${(props) => (props.radius ? `border-radius: ${props.radius};` : "")}
   ${(props) => (props.self ? `justify-self: ${props.self};` : "")}
+  word-break: normal;
+  word-wrap: break-word;
+
 `;
 
 export default Grid;
