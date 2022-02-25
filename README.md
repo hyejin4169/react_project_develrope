@@ -10,13 +10,16 @@
 - 서로의 일상을 자유롭게 공유할 수 있습니다.
 
 ## 📆 제작 기간 및 팀원 소개 👨‍💻👩‍💻
-- 2021-02-11 ~ 2021-02-17
+- 2022/02/11 ~ 2022/02/17
 - 정현수 [GitHub](https://github.com/ricky0813) : 유저(로그인, 회원가입) 및 댓글 담당
 - 윤혜진 [GitHub](https://github.com/hyejin4169) : 이미지 업로드 및 포스팅 담당
 
 ## 💻 Front-end
 - 이번 프로젝트는 프론트엔드 2명, 백엔드 3명이 함께 진행한 프로젝트 입니다.
-- 우선적으로 기본적인 CRUD기능의 구현에 집중하였고, 세부적인 내실을 다지는데 집중하였습니다. 
+- 우선적으로 기본적인 CRUD기능의 구현에 집중하였고, 세부적인 내실을 다지는데 집중하였습니다.
+
+## 💻 Back-end
+- [GitHub 바로가기](https://github.com/minkimhere/BE_miniproject_devel-rope)
 
 ## 🌎 Website
 [사이트 바로가기](http://devel-rope.site/)
